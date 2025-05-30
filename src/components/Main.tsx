@@ -1,4 +1,5 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
+import { Link } from "react-router";
 import { articles } from "../data/articles";
 import SearchInput from "./SearchInput";
 
@@ -13,28 +14,30 @@ const Main = () => {
       </Box>
 
       {articles.map((article, index) => (
-        <Box as="article" key={index} mb={8} maxW="700px">
-          <Heading as="h2" size="lg" mb={2}>
-            {article.title}
-          </Heading>
-          <Text mb={4} noOfLines={1} color="gray.500" fontWeight="normal">
-            {article.body}
-          </Text>
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={6}
-            fontSize="sm"
-            color="gray.500"
-          >
-            {article.date && (
-              <Text as="time" dateTime={article.date}>
-                {new Date(article.date).toLocaleDateString()}
-              </Text>
-            )}
-            {article.readingTime && <Text>{article.readingTime}</Text>}
+        <Link to="/detail">
+          <Box as="article" key={index} mb={8} maxW="700px">
+            <Heading as="h2" size="lg" mb={2}>
+              {article.title}
+            </Heading>
+            <Text mb={4} noOfLines={1} color="gray.500" fontWeight="normal">
+              {article.body}
+            </Text>
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={6}
+              fontSize="sm"
+              color="gray.500"
+            >
+              {article.date && (
+                <Text as="time" dateTime={article.date}>
+                  {new Date(article.date).toLocaleDateString()}
+                </Text>
+              )}
+              {article.readingTime && <Text>{article.readingTime}</Text>}
+            </Box>
           </Box>
-        </Box>
+        </Link>
       ))}
     </Box>
   );

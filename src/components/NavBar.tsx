@@ -1,7 +1,9 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, Tooltip } from "@chakra-ui/react";
+import { FiHome, FiInfo, FiPlusCircle } from "react-icons/fi"; // Feather Icons
 import { Link } from "react-router";
 import ToggleButton from "./ToggleButton";
+import { FiFile } from "react-icons/fi";
 
 const NavBar = () => {
   return (
@@ -11,17 +13,38 @@ const NavBar = () => {
         separator={<ChevronRightIcon color="gray.500" />}
       >
         <BreadcrumbItem>
-          <Link to="/">Home</Link>
+          <Link to="/">
+            <Tooltip hasArrow label="Home">
+              <FiHome size={20} />
+            </Tooltip>
+          </Link>
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <Link to="/create">Create</Link>
+          <Link to="/create">
+            <Tooltip hasArrow label="Create blog">
+              <FiPlusCircle size={20} />
+            </Tooltip>
+          </Link>
         </BreadcrumbItem>
 
         <BreadcrumbItem>
-          <Link to="/about">About</Link>
+          <Link to="https://drive.google.com/file/d/1EiZyPYTQ0v98-qkS6ziSsYUi7f6zMdIK/view?usp=sharing">
+            <Tooltip hasArrow label="Resume">
+              <FiFile size={20} />
+            </Tooltip>
+          </Link>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <Link to="/about">
+            <Tooltip hasArrow label="About me">
+              <FiInfo size={20} />
+            </Tooltip>
+          </Link>
         </BreadcrumbItem>
       </Breadcrumb>
+
       <ToggleButton />
     </Box>
   );

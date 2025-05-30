@@ -1,156 +1,128 @@
-import {
-  Box,
-  Button,
-  Flex,
-  IconButton,
-  Input,
-  VStack,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
+import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState } from "react";
-import {
-  FaBold,
-  FaCode,
-  FaHeading,
-  FaItalic,
-  FaListOl,
-  FaListUl,
-  FaQuoteRight,
-  FaRedo,
-  FaStrikethrough,
-  FaUnderline,
-  FaUndo,
-} from "react-icons/fa";
-import "./editor.css";
+import { articles } from "../data/articles";
+import Toolbar from "./Toolbar";
 
-const AdvancedEditor = () => {
-  const [title, setTitle] = useState("");
-  const toast = useToast();
-
-  const editor = useEditor({
-    extensions: [StarterKit, Underline],
-    content: "",
+const TiptapEditor = () => {
+  const titleEditor = useEditor({
+    extensions: [StarterKit],
+    content: "<p>Write title</p>",
   });
 
-  const handleSubmit = () => {
-    const content = editor?.getHTML() || "";
-    console.log("Title:", title);
-    console.log("Body:", content);
-    toast({
-      title: "Blog Submitted",
-      description: "Content has been logged to console.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+  const bodyEditor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+    ],
+    content: "<p>Write something</p>",
+  });
+
+  const handleSave = () => {
+    if (!bodyEditor || !titleEditor) return;
+
+    const titlePlainText = titleEditor.getText();
+    const titleHTML = titleEditor.getHTML();
+
+    const bodyPlainText = bodyEditor.getText();
+    const bodyHTML = bodyEditor.getHTML();
+
+    console.log("Title Plain text:", titlePlainText);
+    console.log("Title HTML:", titleHTML);
+    console.log("Body Plain text:", bodyPlainText);
+    console.log("Body HTML:", bodyHTML);
   };
 
-  if (!editor) return null;
-
   return (
-    <Box width="100%" mt={8}>
-      <VStack spacing={6} align="stretch">
-        <Input
-          placeholder="Enter Blog Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          size="lg"
-          color="gray.700"
-        />
+    <VStack
+      spacing={4}
+      alignItems="flex-start"
+      justifyContent="flex-start"
+      padding={4}
+      paddingLeft={0}
+      width="100%"
+      maxW={{ base: "100%", md: "700px" }}
+      marginTop={10}
+    >
+      {/* Title Editor */}
+      <Box
+        borderWidth="1px"
+        borderColor="gray.400"
+        borderRadius="md"
+        padding={8}
+        paddingTop={4}
+        paddingBottom={4}
+        width="100%"
+        minHeight="50px"
+      >
+        <EditorContent editor={titleEditor} />
+      </Box>
 
-        <Flex wrap="wrap" gap={2}>
-          <IconButton
-            icon={<FaBold />}
-            aria-label="Bold"
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            colorScheme={editor.isActive("bold") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaItalic />}
-            aria-label="Italic"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            colorScheme={editor.isActive("italic") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaUnderline />}
-            aria-label="Underline"
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            colorScheme={editor.isActive("underline") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaStrikethrough />}
-            aria-label="Strike"
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            colorScheme={editor.isActive("strike") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaHeading />}
-            aria-label="Heading"
-            onClick={() =>
-              editor.chain().focus().toggleHeading({ level: 2 }).run()
-            }
-            colorScheme={
-              editor.isActive("heading", { level: 2 }) ? "teal" : "gray"
-            }
-          />
-          <IconButton
-            icon={<FaListUl />}
-            aria-label="Bullet List"
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
-            colorScheme={editor.isActive("bulletList") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaListOl />}
-            aria-label="Ordered List"
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            colorScheme={editor.isActive("orderedList") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaQuoteRight />}
-            aria-label="Blockquote"
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            colorScheme={editor.isActive("blockquote") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaCode />}
-            aria-label="Code Block"
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-            colorScheme={editor.isActive("codeBlock") ? "teal" : "gray"}
-          />
-          <IconButton
-            icon={<FaUndo />}
-            aria-label="Undo"
-            onClick={() => editor.chain().focus().undo().run()}
-          />
-          <IconButton
-            icon={<FaRedo />}
-            aria-label="Redo"
-            onClick={() => editor.chain().focus().redo().run()}
-          />
-        </Flex>
+      {/* Toolbar */}
+      <Toolbar bodyEditor={bodyEditor} />
 
-        <Box
-          borderWidth="thin"
-          borderColor="gray.700"
-          borderRadius="md"
-          p={3}
-          minH="200px"
-        >
-          <EditorContent
-            editor={editor}
-            placeholder="Write your blog content here..."
-          />
+      {/* Body Editor */}
+      <Box
+        borderWidth="1px"
+        borderColor="gray.400"
+        borderRadius="md"
+        padding={8}
+        paddingTop={4}
+        width="100%"
+        minHeight="250px"
+      >
+        <EditorContent editor={bodyEditor} />
+      </Box>
+
+      {/* Submit Button */}
+      <Button
+        colorScheme="blue"
+        onClick={handleSave}
+        variant="outline"
+        width="100%"
+      >
+        Submit
+      </Button>
+
+      <Box as="section" role="region" aria-label="Latest Posts" marginTop={10}>
+        <Box display="flex" justifyContent="space-between" width="100%">
+          <Text fontSize="2xl" mb={6}>
+            Your Last 5 Posts
+          </Text>
         </Box>
 
-        <Button colorScheme="teal" onClick={handleSubmit}>
-          Submit Blog
-        </Button>
-      </VStack>
-    </Box>
+        {articles.map((article, index) => (
+          <Box as="article" key={index} mb={8} maxW="700px">
+            <Heading as="h2" size="lg" mb={2}>
+              {article.title}
+            </Heading>
+            <Text mb={4} noOfLines={1} color="gray.500" fontWeight="normal">
+              {article.body}
+            </Text>
+            <Box
+              display="flex"
+              alignItems="center"
+              gap={6}
+              fontSize="sm"
+              color="gray.500"
+            >
+              {article.date && (
+                <Text as="time" dateTime={article.date}>
+                  {new Date(article.date).toLocaleDateString()}
+                </Text>
+              )}
+              {article.readingTime && <Text>{article.readingTime}</Text>}
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </VStack>
   );
 };
 
-export default AdvancedEditor;
+export default TiptapEditor;
