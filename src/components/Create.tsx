@@ -1,16 +1,36 @@
-import { Box, Button, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Spinner,
+  Text,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
-import { articles } from "../data/articles";
+import { Link } from "react-router";
+import useBlogs from "../hooks/useBlogs";
+import useCreateBlog from "../hooks/useCreateBlog";
+import useGenre from "../hooks/useGenre";
+import usePortfolioQueryStore from "../store";
+import GenreSelector from "./GenreSelector";
 import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
-import DropDownMenu from "./GenreSelector";
 
 const TiptapEditor = () => {
+  const toast = useToast();
+  const { mutate, isPending } = useCreateBlog();
+  const { data: blogs } = useBlogs();
   const [tags, setTags] = useState<string[]>([]);
+
+  const selectedGenreId = usePortfolioQueryStore(
+    (s) => s.portfolioQuery.genreId
+  );
+  const selectedGenre = useGenre(selectedGenreId);
 
   const titleEditor = useEditor({
     extensions: [StarterKit],
@@ -28,16 +48,23 @@ const TiptapEditor = () => {
     content: "<p>Write something</p>",
   });
 
-  const handleSave = () => {
-    if (!bodyEditor || !titleEditor) return;
+  const handleSave = async () => {
+    if (!bodyEditor || !titleEditor || !selectedGenre) return;
 
-    // const titlePlainText = titleEditor.getText();
-    // const titleHTML = titleEditor.getHTML();
+    mutate({
+      title: titleEditor.getText(),
+      content: bodyEditor.getText(),
+      tags,
+      genre: selectedGenre,
+    });
 
-    // const bodyPlainText = bodyEditor.getText();
-    // const bodyHTML = bodyEditor.getHTML();
-
-    // console.log(tags)
+    toast({
+      title: "Blog created.",
+      description: "Your blog has been successfully posted.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   return (
@@ -51,7 +78,6 @@ const TiptapEditor = () => {
       maxW={{ base: "100%", md: "700px" }}
       marginTop={10}
     >
-      {/* Title Editor */}
       <Box
         borderWidth="1px"
         borderColor="gray.400"
@@ -65,10 +91,8 @@ const TiptapEditor = () => {
         <EditorContent editor={titleEditor} />
       </Box>
 
-      {/* Toolbar */}
       <Toolbar bodyEditor={bodyEditor} />
 
-      {/* Body Editor */}
       <Box
         borderWidth="1px"
         borderColor="gray.400"
@@ -81,18 +105,17 @@ const TiptapEditor = () => {
         <EditorContent editor={bodyEditor} />
       </Box>
 
-      <DropDownMenu />
+      <GenreSelector />
 
       <InlineTagInput tags={tags} setTags={setTags} />
 
-      {/* Submit Button */}
       <Button
         colorScheme="blue"
         onClick={handleSave}
         variant="outline"
         width="100%"
       >
-        Submit
+        {isPending ? <Spinner /> : "Submit"}
       </Button>
 
       <Box as="section" role="region" aria-label="Latest Posts" marginTop={10}>
@@ -102,13 +125,15 @@ const TiptapEditor = () => {
           </Text>
         </Box>
 
-        {articles.map((article, index) => (
+        {blogs?.map((blog, index) => (
           <Box as="article" key={index} mb={8} maxW="700px">
-            <Heading as="h2" size="lg" mb={2}>
-              {article.title}
-            </Heading>
+            <Link to={`/detail/${blog._id}`}>
+              <Heading as="h2" size="lg" mb={2}>
+                {blog.title}
+              </Heading>
+            </Link>
             <Text mb={4} noOfLines={1} color="gray.500" fontWeight="normal">
-              {article.body}
+              {blog.content}
             </Text>
             <Box
               display="flex"
@@ -117,12 +142,12 @@ const TiptapEditor = () => {
               fontSize="sm"
               color="gray.500"
             >
-              {article.date && (
-                <Text as="time" dateTime={article.date}>
-                  {new Date(article.date).toLocaleDateString()}
-                </Text>
-              )}
-              {article.readingTime && <Text>{article.readingTime}</Text>}
+              <Text>
+                {blog.createdAt
+                  ? new Date(blog.createdAt).toLocaleDateString()
+                  : "Unknown date"}
+              </Text>
+              <Text>{blog.readTime} min read</Text>
             </Box>
           </Box>
         ))}

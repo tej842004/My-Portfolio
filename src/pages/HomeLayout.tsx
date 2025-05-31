@@ -1,5 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import Main from "../components/Main";
+import Home from "../components/Home";
 
 const HomeLayout = () => {
   return (
@@ -10,7 +10,7 @@ const HomeLayout = () => {
       }}
     >
       <GridItem area="main">
-        <Main />
+        <Home />
       </GridItem>
     </Grid>
   );

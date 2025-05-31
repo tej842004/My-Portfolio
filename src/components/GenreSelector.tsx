@@ -4,7 +4,7 @@ import useGenre from "../hooks/useGenre";
 import useGenres from "../hooks/useGenres";
 import usePortfolioQueryStore from "../store";
 
-const DropDownMenu = () => {
+const GenreSelector = () => {
   const { data: genres } = useGenres();
   const selectedGenreId = usePortfolioQueryStore(
     (s) => s.portfolioQuery.genreId
@@ -38,4 +38,4 @@ const DropDownMenu = () => {
   );
 };
 
-export default DropDownMenu;
+export default GenreSelector;

@@ -11,9 +11,18 @@ class APIClient<T> {
     this.endpoint = endpoint;
   }
 
-  getAll = async (config: AxiosRequestConfig) => {
+  getAll = async (config?: AxiosRequestConfig) => {
     const res = await axiosInstance.get<T[]>(this.endpoint, config);
-    console.log(res.data);
+    return res.data;
+  };
+
+  get = async (id: number | string) => {
+    const res = await axiosInstance.get<T>(this.endpoint + "/" + id);
+    return res.data;
+  };
+
+  post = async (data: T, config?: AxiosRequestConfig) => {
+    const res = await axiosInstance.post<T>(this.endpoint, data, config);
     return res.data;
   };
 }
