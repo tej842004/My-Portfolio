@@ -80,7 +80,7 @@ export const InlineTagInput = ({ tags, setTags }: Props) => {
       borderRadius="md"
       padding={8}
       paddingTop={4}
-      paddingBottom={6}
+      paddingBottom={4}
       width="100%"
       minHeight="50px"
       cursor="text"
@@ -89,13 +89,7 @@ export const InlineTagInput = ({ tags, setTags }: Props) => {
     >
       <Flex wrap="wrap" align="center" gap="10px">
         {tags.map((tag) => (
-          <Tag
-            size="md"
-            key={tag}
-            borderRadius="full"
-            variant="solid"
-            colorScheme="blue"
-          >
+          <Tag size="md" key={tag} variant="solid" colorScheme="blue">
             <TagLabel>{tag}</TagLabel>
             <TagCloseButton onClick={() => removeTag(tag)} />
           </Tag>

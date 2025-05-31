@@ -1,5 +1,7 @@
+import DropDownMenu from "./components/GenreSelector";
+
 const App = () => {
-  return <div>hello</div>;
+  return <DropDownMenu />;
 };
 
 export default App;

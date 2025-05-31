@@ -7,6 +7,7 @@ import { useState } from "react";
 import { articles } from "../data/articles";
 import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
+import DropDownMenu from "./GenreSelector";
 
 const TiptapEditor = () => {
   const [tags, setTags] = useState<string[]>([]);
@@ -79,6 +80,8 @@ const TiptapEditor = () => {
       >
         <EditorContent editor={bodyEditor} />
       </Box>
+
+      <DropDownMenu />
 
       <InlineTagInput tags={tags} setTags={setTags} />
 
