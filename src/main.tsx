@@ -10,6 +10,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
+      {/* <App /> */}
     </ChakraProvider>
   </StrictMode>
 );

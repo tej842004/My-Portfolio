@@ -3,10 +3,14 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useState } from "react";
 import { articles } from "../data/articles";
+import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
 
 const TiptapEditor = () => {
+  const [tags, setTags] = useState<string[]>([]);
+
   const titleEditor = useEditor({
     extensions: [StarterKit],
     content: "<p>Write title</p>",
@@ -26,16 +30,13 @@ const TiptapEditor = () => {
   const handleSave = () => {
     if (!bodyEditor || !titleEditor) return;
 
-    const titlePlainText = titleEditor.getText();
-    const titleHTML = titleEditor.getHTML();
+    // const titlePlainText = titleEditor.getText();
+    // const titleHTML = titleEditor.getHTML();
 
-    const bodyPlainText = bodyEditor.getText();
-    const bodyHTML = bodyEditor.getHTML();
+    // const bodyPlainText = bodyEditor.getText();
+    // const bodyHTML = bodyEditor.getHTML();
 
-    console.log("Title Plain text:", titlePlainText);
-    console.log("Title HTML:", titleHTML);
-    console.log("Body Plain text:", bodyPlainText);
-    console.log("Body HTML:", bodyHTML);
+    // console.log(tags)
   };
 
   return (
@@ -78,6 +79,8 @@ const TiptapEditor = () => {
       >
         <EditorContent editor={bodyEditor} />
       </Box>
+
+      <InlineTagInput tags={tags} setTags={setTags} />
 
       {/* Submit Button */}
       <Button
