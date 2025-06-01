@@ -18,6 +18,7 @@ import useCreateBlog from "../hooks/useCreateBlog";
 import useGenre from "../hooks/useGenre";
 import usePortfolioQueryStore from "../store";
 import GenreSelector from "./GenreSelector";
+import ImageInput from "./ImageInput";
 import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
 
@@ -26,6 +27,7 @@ const TiptapEditor = () => {
   const { isPending, mutateAsync } = useCreateBlog();
   const { data: blogs } = useBlogs();
   const [tags, setTags] = useState<string[]>([]);
+  const [imageFile, setImageFile] = useState<string | null>(null);
 
   const selectedGenreId = usePortfolioQueryStore(
     (s) => s.portfolioQuery.genreId
@@ -55,6 +57,7 @@ const TiptapEditor = () => {
         content: bodyEditor?.getHTML(),
         tags,
         genre: selectedGenre?._id,
+        image: imageFile || undefined,
       });
 
       toast({
@@ -112,6 +115,8 @@ const TiptapEditor = () => {
       >
         <EditorContent editor={bodyEditor} />
       </Box>
+
+      <ImageInput onImageChange={setImageFile} />
 
       <GenreSelector />
 
