@@ -130,7 +130,12 @@ const ImageInput = ({
       )}
 
       {/* Cropper Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={{ base: "sm", md: "xl" }}
+        isCentered
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Crop your image</ModalHeader>
