@@ -66,15 +66,12 @@ const BlogDetail = () => {
             borderRadius="2xl"
           />
 
-          <VStack spacing={4} align="stretch">
-            <Text
-              fontSize={{ base: "md", md: "lg" }}
-              lineHeight="tall"
-              color="gray.250"
-            >
-              {blog?.content}
-            </Text>
-          </VStack>
+          <Box
+            fontSize={{ base: "md", md: "lg" }}
+            lineHeight="tall"
+            color="gray.250"
+            dangerouslySetInnerHTML={{ __html: blog?.content || "" }}
+          />
         </>
       )}
     </VStack>

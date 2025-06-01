@@ -37,9 +37,15 @@ const Home = () => {
                 {blog.title}
               </Heading>
             </Link>
-            <Text mb={4} noOfLines={1} color="gray.500" fontWeight="normal">
-              {blog.content}
-            </Text>
+
+            <Box
+              mb={4}
+              noOfLines={1}
+              color="gray.500"
+              fontWeight="normal"
+              dangerouslySetInnerHTML={{ __html: blog?.content || "" }}
+            />
+
             <Box
               display="flex"
               alignItems="center"

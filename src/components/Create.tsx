@@ -23,7 +23,7 @@ import Toolbar from "./Toolbar";
 
 const TiptapEditor = () => {
   const toast = useToast();
-  const { mutate, isPending } = useCreateBlog();
+  const { isPending, mutateAsync } = useCreateBlog();
   const { data: blogs } = useBlogs();
   const [tags, setTags] = useState<string[]>([]);
 
@@ -49,22 +49,30 @@ const TiptapEditor = () => {
   });
 
   const handleSave = async () => {
-    if (!bodyEditor || !titleEditor || !selectedGenre) return;
+    try {
+      await mutateAsync({
+        title: titleEditor?.getText(),
+        content: bodyEditor?.getHTML(),
+        tags,
+        genre: selectedGenre?._id,
+      });
 
-    mutate({
-      title: titleEditor.getText(),
-      content: bodyEditor.getText(),
-      tags,
-      genre: selectedGenre,
-    });
-
-    toast({
-      title: "Blog created.",
-      description: "Your blog has been successfully posted.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+      toast({
+        title: "Blog created.",
+        description: "Your blog has been successfully posted.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error creating blog",
+        description: error.response?.data || "Something went wrong",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
