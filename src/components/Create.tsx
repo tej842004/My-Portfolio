@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import useBlogs from "../hooks/useBlogs";
 import useCreateBlog from "../hooks/useCreateBlog";
+import useCreateImage from "../hooks/useCreateImage";
 import useGenre from "../hooks/useGenre";
 import usePortfolioQueryStore from "../store";
 import GenreSelector from "./GenreSelector";
@@ -24,10 +25,13 @@ import Toolbar from "./Toolbar";
 
 const TiptapEditor = () => {
   const toast = useToast();
-  const { isPending, mutateAsync } = useCreateBlog();
   const { data: blogs } = useBlogs();
   const [tags, setTags] = useState<string[]>([]);
-  const [imageFile, setImageFile] = useState<string | null>(null);
+  const { isPending: createBlogLoading, mutateAsync: createBlog } =
+    useCreateBlog();
+  const { mutateAsync: uploadImage, isPending: uploadImageLoading } =
+    useCreateImage();
+  const [imageFile, setImageFile] = useState<File | undefined>(undefined);
 
   const selectedGenreId = usePortfolioQueryStore(
     (s) => s.portfolioQuery.genreId
@@ -52,12 +56,22 @@ const TiptapEditor = () => {
 
   const handleSave = async () => {
     try {
-      await mutateAsync({
+      let imageUrl = "";
+      let imagePublicId = "";
+
+      if (imageFile) {
+        const imageResult = await uploadImage(imageFile);
+        imageUrl = imageResult.imageUrl;
+        imagePublicId = imageResult.public_id;
+      }
+
+      await createBlog({
         title: titleEditor?.getText(),
-        content: bodyEditor?.getHTML(),
+        content: bodyEditor?.getText(),
         tags,
         genre: selectedGenre?._id,
-        image: imageFile || undefined,
+        imageUrl,
+        imagePublicId,
       });
 
       toast({
@@ -128,7 +142,7 @@ const TiptapEditor = () => {
         variant="outline"
         width="100%"
       >
-        {isPending ? <Spinner /> : "Submit"}
+        {uploadImageLoading || createBlogLoading ? <Spinner /> : "Submit"}
       </Button>
 
       <Box as="section" role="region" aria-label="Latest Posts" marginTop={10}>

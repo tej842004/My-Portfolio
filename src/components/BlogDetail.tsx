@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Heading,
   HStack,
   Image,
@@ -7,14 +8,30 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Prashant from "../assets/images/prash.jpg";
-import RCB from "../assets/images/rcb.webp";
 import useBlog from "../hooks/useBlog";
+import useDeleteBlog from "../hooks/useDeleteBlog";
+import useDeleteImage from "../hooks/useDeleteImage";
 
 const BlogDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data: blog, isLoading, error } = useBlog(id!);
+  const { mutateAsync: deleteImage, isPending: deletingImage } =
+    useDeleteImage();
+  const { mutateAsync: deleteBlog, isPending: deletingBlog } = useDeleteBlog();
+
+  const handleDelete = async () => {
+    if (!blog?.imagePublicId || !id) return;
+
+    await deleteImage({ public_id: blog.imagePublicId });
+
+    await deleteBlog(id!, {
+      onSuccess: () => navigate("/"),
+      onError: (err) => console.log("Delete failed", err),
+    });
+  };
 
   if (error) return null;
 
@@ -36,29 +53,59 @@ const BlogDetail = () => {
             {blog?.title}
           </Heading>
 
-          <HStack spacing={2} wrap="wrap">
-            <Image
-              src={Prashant}
-              alt="Author"
-              objectFit="cover"
-              boxSize="30px"
-              borderRadius="full"
-            />
-            <Text fontWeight="medium" fontSize={{ base: "xs", md: "md" }}>
-              {blog?.author}
-            </Text>
-            <Text color="gray.500" fontSize={{ base: "xs", md: "md" }}>
-              {blog?.createdAt
-                ? new Date(blog.createdAt).toLocaleDateString()
-                : ""}
-            </Text>
-            <Text color="gray.500" fontSize={{ base: "xs", md: "md" }}>
-              · {blog?.readTime} min read
-            </Text>
-          </HStack>
+          <Box
+            display="flex"
+            width="100%"
+            flexDirection={{ base: "column", md: "row" }}
+            justifyContent="space-between"
+            alignItems={{ base: "flex-start", md: "center" }}
+            gap={{ base: 6, md: 0 }}
+          >
+            <HStack spacing={2} wrap="wrap">
+              <Image
+                src={Prashant}
+                alt="Author"
+                objectFit="cover"
+                boxSize="30px"
+                borderRadius="full"
+              />
+              <Text fontWeight="medium" fontSize={{ base: "xs", md: "md" }}>
+                {blog?.author}
+              </Text>
+              <Text color="gray.500" fontSize={{ base: "xs", md: "md" }}>
+                {blog?.createdAt
+                  ? new Date(blog.createdAt).toLocaleDateString()
+                  : ""}
+              </Text>
+              <Text color="gray.500" fontSize={{ base: "xs", md: "md" }}>
+                · {blog?.readTime} min read
+              </Text>
+            </HStack>
+
+            <HStack>
+              <Button
+                size="sm"
+                variant="outline"
+                colorScheme="blue"
+                fontWeight="normal"
+              >
+                Edit
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                colorScheme="red"
+                fontWeight="normal"
+                onClick={handleDelete}
+                isLoading={deletingBlog || deletingImage}
+              >
+                Delete
+              </Button>
+            </HStack>
+          </Box>
 
           <Image
-            src={RCB}
+            src={blog?.imageUrl}
             alt="Blog Banner"
             height="100%"
             width="100%"

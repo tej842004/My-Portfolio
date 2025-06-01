@@ -9,5 +9,6 @@ export interface Blog {
   createdAt?: Date;
   readTime?: number;
   genre?: Genre | string;
-  image?: string;
+  imageUrl?: string;
+  imagePublicId?: string;
 }
