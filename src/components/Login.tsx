@@ -7,10 +7,9 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
-import { jwtDecode } from "jwt-decode";
-import { useContext, useState } from "react";
-import AuthContext from "../auth/context";
-import type { User } from "../entitles/User";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import useAuth from "../auth/useAuth";
 import auth from "../services/auth";
 
 interface Login {
@@ -19,17 +18,18 @@ interface Login {
 }
 
 const Login = () => {
-  const { mutateAsync } = auth();
-  const { setUser } = useContext(AuthContext);
+  const { logIn } = useAuth();
+  const navigate = useNavigate();
+  const { mutateAsync, isPending } = auth();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async () => {
     try {
-      const response = await mutateAsync({ email, password });
-      const user = jwtDecode<User>(response);
-      setUser(user);
+      const authToken = await mutateAsync({ email, password });
+      logIn(authToken);
+      navigate("/create");
     } catch (error) {
       console.error(error);
     }
@@ -56,7 +56,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
-        <Button colorScheme="teal" onClick={handleSubmit}>
+        <Button colorScheme="teal" onClick={handleSubmit} isLoading={isPending}>
           Login
         </Button>
       </VStack>

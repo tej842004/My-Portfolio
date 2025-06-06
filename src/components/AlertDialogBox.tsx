@@ -25,6 +25,7 @@ const AlertDialogBox = ({
       isOpen={isOpen}
       leastDestructiveRef={cancelRef}
       onClose={onClose}
+      size={{ base: "xs", md: "md" }}
     >
       <AlertDialogOverlay>
         <AlertDialogContent>

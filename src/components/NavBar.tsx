@@ -12,14 +12,13 @@ import {
   Tooltip,
   useColorMode,
 } from "@chakra-ui/react";
-import { useContext } from "react";
 import { FiFile, FiHome, FiInfo, FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router";
-import AuthContext from "../auth/context";
+import useAuth from "../auth/useAuth";
 import ToggleButton from "./ToggleButton";
 
 const NavBar = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -71,9 +70,7 @@ const NavBar = () => {
               <MenuItem onClick={toggleColorMode}>
                 {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
               </MenuItem>
-              <MenuItem onClick={() => setUser && setUser(null)}>
-                Logout
-              </MenuItem>
+              <MenuItem onClick={logOut}>LogOut</MenuItem>
             </MenuGroup>
           </MenuList>
         </Menu>

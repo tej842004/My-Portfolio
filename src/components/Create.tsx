@@ -4,6 +4,7 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
+import useAuth from "../auth/useAuth";
 import useCreateBlog from "../hooks/useCreateBlog";
 import useCreateImage from "../hooks/useCreateImage";
 import useGenre from "../hooks/useGenre";
@@ -14,6 +15,7 @@ import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
 
 const TiptapEditor = () => {
+  const { user } = useAuth();
   const toast = useToast();
   const [tags, setTags] = useState<string[]>([]);
   const { isPending: createBlogLoading, mutateAsync: createBlog } =
@@ -61,6 +63,7 @@ const TiptapEditor = () => {
         genreId: selectedGenre?._id,
         imageUrl,
         imagePublicId,
+        author: user?._id,
       });
 
       toast({

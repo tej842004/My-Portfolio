@@ -8,7 +8,7 @@ export interface Blog {
   _id?: string;
   title?: string;
   content?: string;
-  author?: Author;
+  author?: string | Author;
   tags?: string[];
   createdAt?: Date;
   readTime?: number;

@@ -3,7 +3,7 @@ import type { User } from "../entitles/User";
 
 interface AuthContextType {
   user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>> | null;
+  setUser: Dispatch<SetStateAction<User | null>>;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
