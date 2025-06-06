@@ -1,11 +1,27 @@
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { Box, Breadcrumb, BreadcrumbItem, Tooltip } from "@chakra-ui/react";
-import { FiHome, FiInfo, FiPlusCircle } from "react-icons/fi"; // Feather Icons
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  Button,
+  Menu,
+  MenuButton,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Tooltip,
+  useColorMode,
+} from "@chakra-ui/react";
+import { useContext } from "react";
+import { FiFile, FiHome, FiInfo, FiPlusCircle } from "react-icons/fi";
 import { Link } from "react-router";
+import AuthContext from "../auth/context";
 import ToggleButton from "./ToggleButton";
-import { FiFile } from "react-icons/fi";
 
 const NavBar = () => {
+  const { user, setUser } = useContext(AuthContext);
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
       <Breadcrumb
@@ -45,7 +61,23 @@ const NavBar = () => {
         </BreadcrumbItem>
       </Breadcrumb>
 
-      <ToggleButton />
+      {!user ? (
+        <ToggleButton />
+      ) : (
+        <Menu>
+          <MenuButton as={Button}>{user.name?.charAt(0)}</MenuButton>
+          <MenuList>
+            <MenuGroup title="Profile">
+              <MenuItem onClick={toggleColorMode}>
+                {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
+              </MenuItem>
+              <MenuItem onClick={() => setUser && setUser(null)}>
+                Logout
+              </MenuItem>
+            </MenuGroup>
+          </MenuList>
+        </Menu>
+      )}
     </Box>
   );
 };

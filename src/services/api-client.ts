@@ -1,33 +1,26 @@
 import axios, { type AxiosRequestConfig } from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
-});
+interface Pagination {
+  total_count: number;
+  count: number;
+  offset: number;
+}
 
-// class APIClient<T> {
-//   endpoint: string;
+export interface FetchResponse<T> {
+  data: T[];
+  pagination?: Pagination;
+}
 
-//   constructor(endpoint: string) {
-//     this.endpoint = endpoint;
+const axiosInstance = axios.create({ baseURL: "http://localhost:3000" });
+
+// Attach token to every request
+// axiosInstance.interceptors.request.use((config) => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     config.headers["x-auth-token"] = token;
 //   }
-
-//   getAll = async (config?: AxiosRequestConfig) => {
-//     const res = await axiosInstance.get<T[]>(this.endpoint, config);
-//     return res.data;
-//   };
-
-//   get = async (id: number | string) => {
-//     const res = await axiosInstance.get<T>(this.endpoint + "/" + id);
-//     return res.data;
-//   };
-
-//   post = async <T = any>(data: T, config?: AxiosRequestConfig) => {
-//     const res = await axiosInstance.post<T>(this.endpoint, data, config);
-//     return res.data;
-//   };
-// }
-
-// export default APIClient;
+//   return config;
+// });
 
 class APIClient<ResponseType> {
   endpoint: string;
@@ -37,7 +30,10 @@ class APIClient<ResponseType> {
   }
 
   getAll = async (config?: AxiosRequestConfig) => {
-    const res = await axiosInstance.get<ResponseType[]>(this.endpoint, config);
+    const res = await axiosInstance.get<FetchResponse<ResponseType>>(
+      this.endpoint,
+      config
+    );
     return res.data;
   };
 

@@ -1,14 +1,18 @@
-import type { Genre } from "./Genre";
+interface Author {
+  _id: string;
+  name: string;
+  email: string;
+}
 
 export interface Blog {
   _id?: string;
   title?: string;
   content?: string;
-  author?: string;
+  author?: Author;
   tags?: string[];
   createdAt?: Date;
   readTime?: number;
-  genre?: Genre | string;
+  genreId?: string;
   imageUrl?: string;
   imagePublicId?: string;
 }

@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
 import type { Genre } from "../entitles/Genre";
-import APIClient from "../services/api-client";
-import genres from "../data/genres";
+import APIClient, { type FetchResponse } from "../services/api-client";
 
 const apiClient = new APIClient<Genre>("/api/genres");
 
 const useGenres = () =>
-  useQuery({
+  useQuery<FetchResponse<Genre>>({
     queryKey: ["genres"],
     queryFn: apiClient.getAll,
     staleTime: ms("24h"),
-    initialData: genres,
+    // initialData: genres,
   });
 
 export default useGenres;

@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import useGenre from "../hooks/useGenre";
 import useGenres from "../hooks/useGenres";
-import usePortfolioQueryStore from "../store";
+import usePortfolioQueryStore from "../store/store";
 
 const GenreSelector = () => {
   const { data: genres } = useGenres();
@@ -25,7 +25,7 @@ const GenreSelector = () => {
         {selectedGenre?.title || "Genres"}
       </MenuButton>
       <MenuList>
-        {genres?.map((genre) => (
+        {genres?.data.map((genre) => (
           <MenuItem
             key={genre._id}
             onClick={() => setSelectedGenreId(genre._id)}

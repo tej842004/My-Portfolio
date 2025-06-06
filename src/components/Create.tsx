@@ -1,23 +1,13 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Spinner,
-  Text,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, useToast, VStack } from "@chakra-ui/react";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
-import { Link } from "react-router";
-import useBlogs from "../hooks/useBlogs";
 import useCreateBlog from "../hooks/useCreateBlog";
 import useCreateImage from "../hooks/useCreateImage";
 import useGenre from "../hooks/useGenre";
-import usePortfolioQueryStore from "../store";
+import usePortfolioQueryStore from "../store/store";
 import GenreSelector from "./GenreSelector";
 import ImageInput from "./ImageInput";
 import { InlineTagInput } from "./InlineTagInput";
@@ -25,7 +15,6 @@ import Toolbar from "./Toolbar";
 
 const TiptapEditor = () => {
   const toast = useToast();
-  const { data: blogs } = useBlogs();
   const [tags, setTags] = useState<string[]>([]);
   const { isPending: createBlogLoading, mutateAsync: createBlog } =
     useCreateBlog();
@@ -69,7 +58,7 @@ const TiptapEditor = () => {
         title: titleEditor?.getText(),
         content: bodyEditor?.getText(),
         tags,
-        genre: selectedGenre?._id,
+        genreId: selectedGenre?._id,
         imageUrl,
         imagePublicId,
       });
@@ -141,44 +130,10 @@ const TiptapEditor = () => {
         onClick={handleSave}
         variant="outline"
         width="100%"
+        isLoading={createBlogLoading || uploadImageLoading}
       >
-        {uploadImageLoading || createBlogLoading ? <Spinner /> : "Submit"}
+        Submit
       </Button>
-
-      <Box as="section" role="region" aria-label="Latest Posts" marginTop={10}>
-        <Box display="flex" justifyContent="space-between" width="100%">
-          <Text fontSize="2xl" mb={6}>
-            Your Last 5 Posts
-          </Text>
-        </Box>
-
-        {blogs?.map((blog, index) => (
-          <Box as="article" key={index} mb={8} maxW="700px">
-            <Link to={`/detail/${blog._id}`}>
-              <Heading as="h2" size="lg" mb={2}>
-                {blog.title}
-              </Heading>
-            </Link>
-            <Text mb={4} noOfLines={1} color="gray.500" fontWeight="normal">
-              {blog.content}
-            </Text>
-            <Box
-              display="flex"
-              alignItems="center"
-              gap={6}
-              fontSize="sm"
-              color="gray.500"
-            >
-              <Text>
-                {blog.createdAt
-                  ? new Date(blog.createdAt).toLocaleDateString()
-                  : "Unknown date"}
-              </Text>
-              <Text>{blog.readTime} min read</Text>
-            </Box>
-          </Box>
-        ))}
-      </Box>
     </VStack>
   );
 };
