@@ -34,10 +34,18 @@ const BlogDetail = () => {
 
   const handleDelete = async () => {
     await deleteBlog(id!, {
-      onSuccess: () => navigate("/"),
+      onSuccess: () => {
+        toast({
+          title: "Blog Deleted",
+          description: "The blog has been successfully removed.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        navigate("/");
+      },
       onError: (error: Error) => {
         const err = error as AxiosError;
-
         toast({
           title: "Failed to delete blog",
           description:
@@ -105,27 +113,31 @@ const BlogDetail = () => {
                 </Text>
               </HStack>
 
-              {user && user._id === blog?.author && (
-                <HStack>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    colorScheme="blue"
-                    fontWeight="normal"
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    colorScheme="red"
-                    fontWeight="normal"
-                    onClick={onOpen}
-                  >
-                    Delete
-                  </Button>
-                </HStack>
-              )}
+              {user &&
+                user._id ===
+                  (typeof blog?.author === "object"
+                    ? blog?.author._id
+                    : blog?.author) && (
+                  <HStack>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      colorScheme="blue"
+                      fontWeight="normal"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      colorScheme="red"
+                      fontWeight="normal"
+                      onClick={onOpen}
+                    >
+                      Delete
+                    </Button>
+                  </HStack>
+                )}
             </Box>
 
             <Image
