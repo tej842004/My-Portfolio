@@ -80,7 +80,7 @@ const Login = () => {
                   </InputLeftElement>
                   <Input
                     name="email"
-                    placeholder="Enter your email..."
+                    placeholder="Enter your email"
                     onChange={handleChange("email")}
                   />
                 </InputGroup>
@@ -95,7 +95,7 @@ const Login = () => {
                   <Input
                     type={showPassword ? "text" : "password"}
                     name="password"
-                    placeholder="Enter your password..."
+                    placeholder="Enter your password"
                     onChange={handleChange("password")}
                   />
                   <InputRightElement>
