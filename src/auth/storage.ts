@@ -37,4 +37,4 @@ const removeToken = () => {
   }
 };
 
-export default { storeToken, removeToken, getUser };
+export default { storeToken, removeToken, getUser, getToken };

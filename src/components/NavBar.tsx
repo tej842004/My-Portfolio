@@ -11,13 +11,16 @@ import {
   MenuList,
   Tooltip,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import { FiFile, FiHome, FiInfo, FiPlusCircle } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../auth/useAuth";
 import ToggleButton from "./ToggleButton";
 
 const NavBar = () => {
+  const toast = useToast();
+  const navigate = useNavigate();
   const { user, logOut } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -70,7 +73,21 @@ const NavBar = () => {
               <MenuItem onClick={toggleColorMode}>
                 {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
               </MenuItem>
-              <MenuItem onClick={logOut}>LogOut</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  logOut();
+                  toast({
+                    title: "Logged out successfully.",
+                    description: "You have been logged out of your account.",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  navigate("/");
+                }}
+              >
+                LogOut
+              </MenuItem>
             </MenuGroup>
           </MenuList>
         </Menu>

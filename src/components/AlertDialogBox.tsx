@@ -7,10 +7,16 @@ import {
   AlertDialogOverlay,
   Button,
 } from "@chakra-ui/react";
+import type { RefObject } from "react";
 
-// interface Props {
-//   isOpen:
-// }
+interface AlertDialogBoxProps {
+  isOpen: boolean;
+  cancelRef: RefObject<HTMLButtonElement | null>;
+  onClose: () => void;
+  handleDelete: () => void;
+  deletingImage?: boolean;
+  deletingBlog?: boolean;
+}
 
 const AlertDialogBox = ({
   isOpen,
@@ -19,7 +25,7 @@ const AlertDialogBox = ({
   handleDelete,
   deletingImage,
   deletingBlog,
-}) => {
+}: AlertDialogBoxProps) => {
   return (
     <AlertDialog
       isOpen={isOpen}

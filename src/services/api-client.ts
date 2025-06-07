@@ -1,4 +1,5 @@
 import axios, { type AxiosRequestConfig } from "axios";
+import authStorage from "../auth/storage";
 
 interface Pagination {
   total_count: number;
@@ -14,13 +15,13 @@ export interface FetchResponse<T> {
 const axiosInstance = axios.create({ baseURL: "http://localhost:3000" });
 
 // Attach token to every request
-// axiosInstance.interceptors.request.use((config) => {
-//   const token = localStorage.getItem("token");
-//   if (token) {
-//     config.headers["x-auth-token"] = token;
-//   }
-//   return config;
-// });
+axiosInstance.interceptors.request.use((config) => {
+  const token = authStorage.getToken();
+  if (token) {
+    config.headers["x-auth-token"] = token;
+  }
+  return config;
+});
 
 class APIClient<ResponseType> {
   endpoint: string;

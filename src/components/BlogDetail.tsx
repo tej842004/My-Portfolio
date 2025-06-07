@@ -7,8 +7,10 @@ import {
   Spinner,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
+import type { AxiosError } from "axios";
 import { useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import Prashant from "../assets/images/prash.jpg";
@@ -19,9 +21,10 @@ import useDeleteImage from "../hooks/useDeleteImage";
 import AlertDialogBox from "./AlertDialogBox";
 
 const BlogDetail = () => {
+  const toast = useToast();
   const { user } = useAuth();
   const { id } = useParams();
-  const cancelRef = useRef(null);
+  const cancelRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: blog, isLoading, error } = useBlog(id!);
@@ -30,14 +33,26 @@ const BlogDetail = () => {
     useDeleteImage();
 
   const handleDelete = async () => {
-    if (!blog?.imagePublicId || !id) return;
-
-    await deleteImage({ public_id: blog.imagePublicId });
-
     await deleteBlog(id!, {
       onSuccess: () => navigate("/"),
-      onError: (err) => console.log("Delete failed", err),
+      onError: (error: Error) => {
+        const err = error as AxiosError;
+
+        toast({
+          title: "Failed to delete blog",
+          description:
+            typeof err.response?.data === "string"
+              ? err.response.data
+              : JSON.stringify(err.response?.data),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      },
     });
+
+    if (!blog?.imagePublicId || !id) return;
+    await deleteImage({ public_id: blog.imagePublicId });
   };
 
   if (error) return null;
@@ -90,7 +105,7 @@ const BlogDetail = () => {
                 </Text>
               </HStack>
 
-              {user && (
+              {user && user._id === blog?.author && (
                 <HStack>
                   <Button
                     size="sm"
