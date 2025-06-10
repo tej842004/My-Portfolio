@@ -6,11 +6,12 @@ import {
   CardBody,
   CardFooter,
   Heading,
+  Image,
   Stack,
   Text,
   Wrap,
   WrapItem,
-  useColorModeValue
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
@@ -39,8 +40,9 @@ const ProjectCard = ({ project }: Props) => {
     >
       <CardBody>
         <Stack spacing={3}>
+          <Image src={project.logo} height="25px" width="25px" />
           <Heading size="md">{project.title}</Heading>
-          <Text color="gray.500" fontSize="sm">
+          <Text color="gray.300" fontSize="sm">
             {project.description}
           </Text>
 
@@ -57,7 +59,7 @@ const ProjectCard = ({ project }: Props) => {
       </CardBody>
 
       <CardFooter>
-        <ButtonGroup spacing="3">
+        <ButtonGroup spacing={3}>
           {project.website && (
             <Link to={project.website} target="_blank">
               <Button

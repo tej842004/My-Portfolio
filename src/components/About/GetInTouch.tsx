@@ -49,15 +49,8 @@ const GetInTouch = () => {
       </Heading>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
-          <FormControl>
-            <FormLabel
-              _after={{
-                content: '"*"',
-                color: "teal",
-              }}
-            >
-              Name
-            </FormLabel>
+          <FormControl isRequired>
+            <FormLabel>Name</FormLabel>
             <Input
               name="name"
               placeholder="Your name"
@@ -66,15 +59,8 @@ const GetInTouch = () => {
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel
-              _after={{
-                content: '"*"',
-                color: "teal",
-              }}
-            >
-              Email
-            </FormLabel>
+          <FormControl isRequired>
+            <FormLabel>Email</FormLabel>
             <Input
               type="email"
               name="email"
@@ -84,15 +70,8 @@ const GetInTouch = () => {
             />
           </FormControl>
 
-          <FormControl>
-            <FormLabel
-              _after={{
-                content: '"*"',
-                color: "teal",
-              }}
-            >
-              Message
-            </FormLabel>
+          <FormControl isRequired>
+            <FormLabel>Message</FormLabel>
             <Textarea
               name="message"
               placeholder="Your message"

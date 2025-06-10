@@ -64,7 +64,9 @@ const NavBar = () => {
         <ToggleButton />
       ) : (
         <Menu>
-          <MenuButton as={Button}>{user.name?.charAt(0)}</MenuButton>
+          <MenuButton as={Button} borderRadius="full" size="sm">
+            {user.name?.charAt(0)}
+          </MenuButton>
           <MenuList>
             <MenuGroup title="Profile">
               <MenuItem onClick={toggleColorMode}>

@@ -5,4 +5,5 @@ export interface Project {
   techstack: string[];
   website: string;
   github: string;
+  logo: string;
 }
