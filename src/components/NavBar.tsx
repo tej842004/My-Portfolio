@@ -13,7 +13,7 @@ import {
   useColorMode,
   useToast,
 } from "@chakra-ui/react";
-import { FiFile, FiHome, FiInfo, FiPlusCircle } from "react-icons/fi";
+import { FiHome, FiInfo, FiPlusCircle } from "react-icons/fi";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../auth/useAuth";
 import ToggleButton from "./ToggleButton";
@@ -25,7 +25,12 @@ const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="space-between">
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      marginBottom={10}
+    >
       <Breadcrumb
         spacing="8px"
         separator={<ChevronRightIcon color="gray.500" />}
@@ -42,14 +47,6 @@ const NavBar = () => {
           <Link to="/create">
             <Tooltip hasArrow label="Create blog">
               <FiPlusCircle size={20} />
-            </Tooltip>
-          </Link>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem>
-          <Link to="https://drive.google.com/file/d/1EiZyPYTQ0v98-qkS6ziSsYUi7f6zMdIK/view?usp=sharing">
-            <Tooltip hasArrow label="Resume">
-              <FiFile size={20} />
             </Tooltip>
           </Link>
         </BreadcrumbItem>

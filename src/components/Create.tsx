@@ -93,7 +93,6 @@ const TiptapEditor = () => {
       paddingLeft={0}
       width="100%"
       maxW={{ base: "100%", md: "700px" }}
-      marginTop={10}
     >
       <Box
         borderWidth="1px"

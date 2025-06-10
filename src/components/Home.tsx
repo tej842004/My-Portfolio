@@ -1,8 +1,8 @@
 import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router";
 import useBlogs from "../hooks/useBlogs";
 import SearchInput from "./SearchInput";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const Home = () => {
   const {
@@ -22,7 +22,7 @@ const Home = () => {
     blogs?.pages.reduce((total, page) => total + page.data.length, 0) || 0;
 
   return (
-    <Box as="section" role="region" aria-label="Latest Posts" marginTop={10}>
+    <Box as="section" role="region" aria-label="Latest Posts">
       <Box display="flex" justifyContent="space-between" width="100%">
         <Text fontSize="2xl" mb={6}>
           Latest Posts
