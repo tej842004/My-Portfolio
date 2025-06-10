@@ -1,6 +1,6 @@
-import { Box, Heading, HStack, Image, Text, VStack } from "@chakra-ui/react";
-import Parul_University from "../../assets/images/parul_university.jpg";
+import { Box, Heading, HStack, Image, Text } from "@chakra-ui/react";
 import Don_Bosco from "../../assets/images/Don Bosco.jpg";
+import Parul_University from "../../assets/images/parul_university.jpg";
 
 const Education = () => {
   return (

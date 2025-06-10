@@ -10,6 +10,20 @@ import {
 import Prashant from "../../assets/images/prash.jpg";
 
 const Testimonial = () => {
+  const handleScrollToGetInTouch = () => {
+    const getInTouchSection = document.getElementById("get-in-touch");
+    if (getInTouchSection) {
+      getInTouchSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleResumeClick = () => {
+    window.open(
+      "https://drive.google.com/file/d/1wY9sSUEkyHJ7rTx9xui5USzQh4cKjirj/view?usp=drive_link",
+      "_blank"
+    );
+  };
+
   return (
     <VStack spacing={6} textAlign="center" py={10} marginBottom="15rem">
       <Image
@@ -47,10 +61,18 @@ const Testimonial = () => {
       </Box>
 
       <HStack gap={3}>
-        <Button colorScheme="teal" borderRadius="2xl">
+        <Button
+          colorScheme="teal"
+          borderRadius="2xl"
+          onClick={handleResumeClick}
+        >
           Resume
         </Button>
-        <Button colorScheme="blue" borderRadius="2xl">
+        <Button
+          colorScheme="blue"
+          borderRadius="2xl"
+          onClick={handleScrollToGetInTouch}
+        >
           Get in touch
         </Button>
       </HStack>
