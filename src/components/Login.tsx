@@ -124,7 +124,13 @@ const Login = () => {
         <Box display="flex" gap={1}>
           <Text>Don't have an account?</Text>
           <Link to="/signup">
-            <Text _hover={{ textDecoration: "underline" }}>Sign up</Text>
+            <Text
+              _hover={{ textDecoration: "underline" }}
+              color="teal"
+              fontWeight="bold"
+            >
+              Sign up
+            </Text>
           </Link>
         </Box>
       </VStack>

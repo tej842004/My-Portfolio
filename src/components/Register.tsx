@@ -18,7 +18,7 @@ import { Formik } from "formik";
 import { useState } from "react";
 import { CiLock, CiMail, CiUser } from "react-icons/ci";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import users from "../services/users";
 
 interface Register {
@@ -132,6 +132,18 @@ const Register = () => {
             </form>
           )}
         </Formik>
+        <Box display="flex" gap={1}>
+          <Text>Already Registered?</Text>
+          <Link to="/login">
+            <Text
+              _hover={{ textDecoration: "underline" }}
+              color="teal"
+              fontWeight="bold"
+            >
+              Sign in
+            </Text>
+          </Link>
+        </Box>
       </VStack>
     </Box>
   );
