@@ -3,6 +3,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import type { AxiosError } from "axios";
 import { useState } from "react";
 import useAuth from "../auth/useAuth";
 import useCreateBlog from "../hooks/useCreateBlog";
@@ -58,7 +59,7 @@ const TiptapEditor = () => {
 
       await createBlog({
         title: titleEditor?.getText(),
-        content: bodyEditor?.getText(),
+        content: bodyEditor?.getJSON(),
         tags,
         genreId: selectedGenre?._id,
         imageUrl,
@@ -73,10 +74,15 @@ const TiptapEditor = () => {
         duration: 3000,
         isClosable: true,
       });
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as AxiosError;
+
       toast({
         title: "Error creating blog",
-        description: error.response?.data || "Something went wrong",
+        description:
+          typeof err.response?.data === "string"
+            ? err.response.data
+            : JSON.stringify(err.response?.data),
         status: "error",
         duration: 4000,
         isClosable: true,

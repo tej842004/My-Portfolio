@@ -91,7 +91,7 @@ const ImageInput = ({
         textAlign="center"
         cursor="pointer"
         onClick={() => inputRef.current?.click()}
-        _hover={{ borderColor: "blue.400", bg: "gray.700" }}
+        _hover={{ borderColor: "teal", bg: "gray.700" }}
       >
         <VStack spacing={2}>
           <Icon as={MdUpload} boxSize={6} color="gray.500" />

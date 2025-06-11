@@ -2,6 +2,7 @@ import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router";
 import useBlogs from "../hooks/useBlogs";
+import { convertTipTapToHtml } from "../utils/convertTipTapToHtml";
 import SearchInput from "./SearchInput";
 
 const Home = () => {
@@ -70,38 +71,42 @@ const Home = () => {
           }
         >
           {blogs.pages.map((page) =>
-            page.data.map((blog, index) => (
-              <Box as="article" key={index} mb={8} maxW="700px">
-                <Link to={`/detail/${blog._id}`}>
-                  <Heading as="h2" size="lg" mb={2}>
-                    {blog.title}
-                  </Heading>
-                </Link>
+            page.data.map((blog, index) => {
+              return (
+                <Box as="article" key={index} mb={8} maxW="700px">
+                  <Link to={`/detail/${blog._id}`}>
+                    <Heading as="h2" size="lg" mb={2}>
+                      {blog.title}
+                    </Heading>
+                  </Link>
 
-                <Box
-                  mb={4}
-                  noOfLines={1}
-                  color="gray.500"
-                  fontWeight="normal"
-                  dangerouslySetInnerHTML={{ __html: blog?.content || "" }}
-                />
+                  <Box
+                    mb={4}
+                    noOfLines={1}
+                    color="gray.500"
+                    fontWeight="normal"
+                    dangerouslySetInnerHTML={{
+                      __html: convertTipTapToHtml(blog.content),
+                    }}
+                  />
 
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  gap={6}
-                  fontSize="sm"
-                  color="gray.500"
-                >
-                  <Text>
-                    {blog.createdAt
-                      ? new Date(blog.createdAt).toLocaleDateString()
-                      : "Unknown date"}
-                  </Text>
-                  <Text>{blog.readTime} min read</Text>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    gap={6}
+                    fontSize="sm"
+                    color="gray.500"
+                  >
+                    <Text>
+                      {blog.createdAt
+                        ? new Date(blog.createdAt).toLocaleDateString()
+                        : "Unknown date"}
+                    </Text>
+                    <Text>{blog.readTime} min read</Text>
+                  </Box>
                 </Box>
-              </Box>
-            ))
+              );
+            })
           )}
         </InfiniteScroll>
       )}

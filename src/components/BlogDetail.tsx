@@ -18,6 +18,7 @@ import useAuth from "../auth/useAuth";
 import useBlog from "../hooks/useBlog";
 import useDeleteBlog from "../hooks/useDeleteBlog";
 import useDeleteImage from "../hooks/useDeleteImage";
+import { convertTipTapToHtml } from "../utils/convertTipTapToHtml";
 import AlertDialogBox from "./AlertDialogBox";
 
 const BlogDetail = () => {
@@ -148,12 +149,11 @@ const BlogDetail = () => {
               objectFit="cover"
               borderRadius="2xl"
             />
-
             <Box
-              fontSize={{ base: "md", md: "lg" }}
               lineHeight="tall"
-              color="gray.250"
-              dangerouslySetInnerHTML={{ __html: blog?.content || "" }}
+              dangerouslySetInnerHTML={{
+                __html: convertTipTapToHtml(blog?.content),
+              }}
             />
           </>
         )}
