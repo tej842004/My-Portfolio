@@ -136,7 +136,6 @@ const TiptapEditor = () => {
       <Button
         colorScheme="blue"
         onClick={handleSave}
-        variant="outline"
         width="100%"
         isLoading={createBlogLoading || uploadImageLoading}
       >
