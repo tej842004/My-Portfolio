@@ -12,7 +12,9 @@ export interface FetchResponse<T> {
   pagination?: Pagination;
 }
 
-const axiosInstance = axios.create({ baseURL: "http://localhost:3000" });
+const axiosInstance = axios.create({
+  baseURL: "https://portfolio-backend-duhc.onrender.com",
+});
 
 // Attach token to every request
 axiosInstance.interceptors.request.use((config) => {
