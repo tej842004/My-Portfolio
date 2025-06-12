@@ -1,15 +1,15 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, type BoxProps } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
-interface Props {
+interface Props extends BoxProps {
   id?: string;
   heading: string;
   children: ReactNode;
 }
 
-const AboutSection = ({ id, heading, children }: Props) => {
+const AboutSection = ({ id, heading, children, ...rest }: Props) => {
   return (
-    <Box width="100%" id={id}>
+    <Box width="100%" id={id} {...rest}>
       <Heading fontSize="2xl" textAlign="center" marginBottom={5}>
         {heading}
       </Heading>

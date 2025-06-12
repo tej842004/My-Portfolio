@@ -1,23 +1,16 @@
-import {
-  Badge,
-  Box,
-  Heading,
-  HStack,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Badge, Box, HStack, useColorModeValue } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useMemo } from "react";
 import skills from "../../data/skills";
+import AboutSection from "./AboutSection";
 
-// Keyframes
+const heading = "Skills";
+
 const scrollLeft = keyframes`
   0% { transform: translateX(0%); }
   100% { transform: translateX(-100%); } /* Scrolls content left */
 `;
 
-// This is the correct keyframe for a seamless infinite scroll to the right
-// It starts with the content shifted left (-100%) so that when it scrolls to 0%,
-// the duplicated content provides a seamless loop.
 const scrollRightSeamless = keyframes`
   0% { transform: translateX(-100%); }
   100% { transform: translateX(0%); }
@@ -29,19 +22,13 @@ const Skills = () => {
 
   const rows = [
     { animation: `${scrollLeft} 120s linear infinite` },
-    // **CHANGE HERE: Add a negative animation delay**
     { animation: `${scrollRightSeamless} 140s linear infinite -70s` }, // Negative delay to start mid-animation
     { animation: `${scrollLeft} 160s linear infinite` },
   ];
 
   return (
-    <Box width="100%" position="relative" py={6}>
-      <Heading fontSize="2xl" mb={6} textAlign="center">
-        Skills
-      </Heading>
-
+    <AboutSection heading={heading} position="relative">
       <Box position="relative" overflow="hidden" width="100%">
-        {/* Three rows */}
         {rows.map((row, i) => (
           <Box
             key={i}
@@ -72,7 +59,6 @@ const Skills = () => {
               ))}
             </HStack>
 
-            {/* Left fade */}
             <Box
               position="absolute"
               left={0}
@@ -83,7 +69,6 @@ const Skills = () => {
               zIndex={1}
               pointerEvents="none"
             />
-            {/* Right fade */}
             <Box
               position="absolute"
               right={0}
@@ -97,7 +82,7 @@ const Skills = () => {
           </Box>
         ))}
       </Box>
-    </Box>
+    </AboutSection>
   );
 };
 
