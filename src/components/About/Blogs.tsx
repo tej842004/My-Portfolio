@@ -1,8 +1,9 @@
-import { Box, Spinner, Stack, Text } from "@chakra-ui/react";
+import { Box, Spinner, Text } from "@chakra-ui/react";
 import useBlogs from "../../hooks/useBlogs";
 import formatDate from "../../utils/formatDate";
 import AboutLabel from "./AboutLabel";
 import AboutSection from "./AboutSection";
+import AboutSectionStack from "./AboutSectionStack";
 
 const heading = "Recent Blogs";
 
@@ -27,7 +28,7 @@ const Blogs = () => {
       )}
 
       {!isLoading && !error && blogs && (
-        <Stack spacing={6} direction="column" align="stretch">
+        <AboutSectionStack>
           {blogs.pages.map((page) =>
             page.data.map((blog, index) => {
               const createdAt = formatDate(blog);
@@ -40,7 +41,7 @@ const Blogs = () => {
               );
             })
           )}
-        </Stack>
+        </AboutSectionStack>
       )}
     </AboutSection>
   );

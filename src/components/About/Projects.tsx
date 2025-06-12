@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Heading,
   SimpleGrid,
   Spinner,
   Text,
@@ -9,7 +8,10 @@ import {
 } from "@chakra-ui/react";
 import { HiChevronDown } from "react-icons/hi2";
 import useProjects from "../../hooks/useProjects";
+import AboutSection from "./AboutSection";
 import ProjectCard from "./ProjectCard";
+
+const heading = "Proof of Work";
 
 const Projects = () => {
   const {
@@ -27,11 +29,7 @@ const Projects = () => {
     projects.pages.every((page) => page.data.length === 0);
 
   return (
-    <Box width="100%">
-      <Heading fontSize="2xl" marginBottom={5} textAlign="center">
-        Proof of Work
-      </Heading>
-
+    <AboutSection heading={heading}>
       {isEmpty && (
         <Box display="flex" justifyContent="center" width="100%">
           <Text color="gray.500">Nothing Found</Text>
@@ -67,7 +65,7 @@ const Projects = () => {
           </Button>
         </VStack>
       )}
-    </Box>
+    </AboutSection>
   );
 };
 

@@ -1,18 +1,18 @@
-import { Stack } from "@chakra-ui/react";
 import educations from "../../data/educations";
 import AboutLabel from "./AboutLabel";
 import AboutSection from "./AboutSection";
+import AboutSectionStack from "./AboutSectionStack";
 
 const heading = "Education";
 
 const Education = () => {
   return (
     <AboutSection heading={heading}>
-      <Stack spacing={6} direction="column" align="stretch">
+      <AboutSectionStack>
         {educations.map((e) => (
           <AboutLabel {...e} key={e.id} />
         ))}
-      </Stack>
+      </AboutSectionStack>
     </AboutSection>
   );
 };
