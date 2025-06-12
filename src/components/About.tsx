@@ -4,7 +4,7 @@ import Education from "./About/Education";
 import Experience from "./About/Experience";
 import GetInTouch from "./About/GetInTouch";
 import Projects from "./About/Projects";
-import Skills from "./About/Skills";
+import Skills from "./About/skills";
 import Testimonial from "./About/Testimonial";
 
 const About = () => {
