@@ -58,7 +58,7 @@ const GetInTouch = () => {
   };
 
   return (
-    <AboutSection heading={heading}>
+    <AboutSection heading={heading} id="get-in-touch">
       <Formik
         initialValues={{ name: "", email: "", message: "" }}
         validationSchema={validationSchema}
