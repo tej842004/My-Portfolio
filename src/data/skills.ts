@@ -11,9 +11,12 @@ export default [
   "Turborepo",
   "Docker",
   "AWS",
-  "Redux",
+  "Zustand",
   "Tailwind CSS",
   "Node.js",
   "Express.js",
   "Git",
+  "Tanstack Query",
+  "Chakra UI",
+  "Radix UI",
 ];
