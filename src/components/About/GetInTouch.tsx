@@ -1,10 +1,8 @@
 import {
-  Box,
   Button,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
   Input,
   Textarea,
   useToast,
@@ -13,6 +11,9 @@ import {
 import { Field, Formik } from "formik";
 import * as Yup from "yup";
 import mail, { type Mail } from "../../services/mail";
+import AboutSection from "./AboutSection";
+
+const heading = "Get in Touch";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -57,10 +58,7 @@ const GetInTouch = () => {
   };
 
   return (
-    <Box width="100%" id="get-in-touch">
-      <Heading textAlign="center" marginBottom={5} fontSize="2xl">
-        Get in Touch
-      </Heading>
+    <AboutSection heading={heading}>
       <Formik
         initialValues={{ name: "", email: "", message: "" }}
         validationSchema={validationSchema}
@@ -113,7 +111,7 @@ const GetInTouch = () => {
           </form>
         )}
       </Formik>
-    </Box>
+    </AboutSection>
   );
 };
 
