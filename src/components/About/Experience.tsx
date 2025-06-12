@@ -7,19 +7,6 @@ const Experience = () => {
       <Heading fontSize="2xl" textAlign="center" marginBottom={5}>
         Experiences
       </Heading>
-      {/* <Box
-        display="flex"
-        justifyContent={{ base: "unset", md: "space-between" }}
-        flexDirection={{ base: "column", md: "row" }}
-      >
-        <Box>
-          <Heading fontSize="lg">Full-Stack Developer</Heading>
-          <Text fontSize="xs" color="gray.500">
-            Nth Cloud LLP
-          </Text>
-        </Box>
-        <Text fontSize="xs">May 2025 - present</Text>
-      </Box> */}
       <HStack>
         <Image src={cloud} height="35px" width="35px" borderRadius="full" />
 
@@ -29,7 +16,7 @@ const Experience = () => {
           flexDirection={{ base: "column", md: "row" }}
           width="100%"
         >
-          <Box>
+          <Box mb={{ base: 2, md: 0 }}>
             <Heading fontSize="lg">Full-Stack Developer</Heading>
             <Text fontSize="xs" color="gray.500">
               Nth Cloud LLP

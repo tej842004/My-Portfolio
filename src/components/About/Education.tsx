@@ -23,7 +23,7 @@ const Education = () => {
           flexDirection={{ base: "column", md: "row" }}
           width="100%"
         >
-          <Box>
+          <Box mb={{ base: 2, md: 0 }}>
             <Heading fontSize="lg">Computer Science & Engineering</Heading>
             <Text fontSize="xs" color="gray.500">
               Parul University
