@@ -1,4 +1,5 @@
 import { Box, Spinner, Text } from "@chakra-ui/react";
+import { Link } from "react-router";
 import useBlogs from "../../hooks/useBlogs";
 import formatDate from "../../utils/formatDate";
 import AboutLabel from "./AboutLabel";
@@ -33,11 +34,13 @@ const Blogs = () => {
             page.data.map((blog, index) => {
               const createdAt = formatDate(blog);
               return (
-                <AboutLabel
-                  key={index}
-                  title={blog.title}
-                  subtitle={createdAt}
-                />
+                <Link to={`/detail/${blog._id}`}>
+                  <AboutLabel
+                    key={index}
+                    title={blog.title}
+                    subtitle={createdAt}
+                  />
+                </Link>
               );
             })
           )}
