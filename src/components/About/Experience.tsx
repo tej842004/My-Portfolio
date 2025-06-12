@@ -1,32 +1,19 @@
-import { Box, Heading, HStack, Image, Text } from "@chakra-ui/react";
-import cloud from "../../assets/images/cloud-service.png";
+import { Stack } from "@chakra-ui/react";
+import experience from "../../data/experience";
+import AboutLabel from "./AboutLabel";
+import AboutSection from "./AboutSection";
+
+const heading = "Experience";
 
 const Experience = () => {
   return (
-    <Box width="100%">
-      <Heading fontSize="2xl" textAlign="center" marginBottom={5}>
-        Experiences
-      </Heading>
-      <HStack>
-        <Image src={cloud} height="35px" width="35px" borderRadius="full" />
-
-        <Box
-          display="flex"
-          justifyContent={{ base: "unset", md: "space-between" }}
-          flexDirection={{ base: "column", md: "row" }}
-          width="100%"
-        >
-          <Box mb={{ base: 2, md: 0 }}>
-            <Heading fontSize="lg">Full-Stack Developer</Heading>
-            <Text fontSize="xs" color="gray.500">
-              Nth Cloud LLP
-            </Text>
-          </Box>
-
-          <Text fontSize="xs">May 2025 - present</Text>
-        </Box>
-      </HStack>
-    </Box>
+    <AboutSection heading={heading}>
+      <Stack spacing={6} direction="column" align="stretch">
+        {experience.map((e) => (
+          <AboutLabel {...e} key={e.id} />
+        ))}
+      </Stack>
+    </AboutSection>
   );
 };
 
