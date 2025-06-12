@@ -10,7 +10,15 @@ const AboutLabel = ({ image, title, subtitle, date }: Label) => {
       alignItems={{ md: "center" }}
       gap={4}
     >
-      <Image src={image} height="40px" width="40px" borderRadius="full" />
+      {image && (
+        <Image
+          src={image}
+          height="40px"
+          width="40px"
+          borderRadius="full"
+          objectFit="cover"
+        />
+      )}
 
       <Box
         display="flex"
@@ -25,9 +33,11 @@ const AboutLabel = ({ image, title, subtitle, date }: Label) => {
           </Text>
         </Box>
 
-        <Text fontSize="sm" mt={{ base: 2, md: 0 }}>
-          {date}
-        </Text>
+        {date && (
+          <Text fontSize="sm" mt={{ base: 2, md: 0 }}>
+            {date}
+          </Text>
+        )}
       </Box>
     </Box>
   );

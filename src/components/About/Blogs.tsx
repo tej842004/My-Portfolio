@@ -1,6 +1,9 @@
-import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
-import { Link } from "react-router";
+import { Box, Spinner, Text } from "@chakra-ui/react";
 import useBlogs from "../../hooks/useBlogs";
+import AboutLabel from "./AboutLabel";
+import AboutSection from "./AboutSection";
+
+const heading = "Recent Blogs";
 
 const Blogs = () => {
   const { data: blogs, error, isLoading } = useBlogs();
@@ -9,11 +12,7 @@ const Blogs = () => {
     !isLoading && blogs && blogs.pages.every((page) => page.data.length === 0);
 
   return (
-    <Box width="100%">
-      <Heading fontSize="2xl" textAlign="center" marginBottom={5}>
-        Recent Blogs
-      </Heading>
-
+    <AboutSection heading={heading}>
       {isEmpty && (
         <Box display="flex" justifyContent="center" width="100%">
           <Text color="gray.500">Nothing Found</Text>
@@ -30,25 +29,21 @@ const Blogs = () => {
         !error &&
         blogs &&
         blogs?.pages.map((page) =>
-          page.data.map((blog, index) => (
-            <Box as="article" key={index}>
-              <Link to={`/detail/${blog._id}`}>
-                <Heading fontSize="lg">{blog.title}</Heading>
-              </Link>
+          page.data.map((blog, index) => {
+            const createdAt = blog.createdAt
+              ? new Date(blog.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              : "Unknown date";
 
-              <Text fontSize="xs" color="gray.500">
-                {blog.createdAt
-                  ? new Date(blog.createdAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
-                  : "Unknown date"}
-              </Text>
-            </Box>
-          ))
+            return (
+              <AboutLabel title={blog.title} subtitle={createdAt} key={index} />
+            );
+          })
         )}
-    </Box>
+    </AboutSection>
   );
 };
 
