@@ -42,7 +42,7 @@ const BlogDetail = () => {
   const { mutateAsync: deleteBlog, isPending: deletingBlog } = useDeleteBlog();
   const { mutateAsync: deleteImage, isPending: deletingImage } =
     useDeleteImage();
-  const isBase = useBreakpointValue({ base: true, md: false });
+  const isBase = useBreakpointValue({ base: true, md: false }, { ssr: false });
 
   const handleDelete = async () => {
     await deleteBlog(id!, {
