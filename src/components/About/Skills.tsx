@@ -48,11 +48,11 @@ const Skills = () => {
             overflow="hidden"
             position="relative"
             width="100%"
-            mb={4}
+            mb={{ base: 2, md: 4 }}
             _hover={{ cursor: "pointer" }}
           >
             <HStack
-              spacing={4}
+              spacing={{ base: 2, md: 4 }}
               animation={row.animation}
               _hover={{ animationPlayState: "paused" }}
               display="inline-flex"
