@@ -3,15 +3,24 @@ import {
   Button,
   Heading,
   HStack,
+  Icon,
+  IconButton,
   Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spinner,
   Text,
+  useBreakpointValue,
   useDisclosure,
   useToast,
   VStack,
 } from "@chakra-ui/react";
 import type { AxiosError } from "axios";
 import { useRef } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router";
 import Prashant from "../assets/images/prash.jpg";
 import useAuth from "../auth/useAuth";
@@ -19,6 +28,7 @@ import useBlog from "../hooks/useBlog";
 import useDeleteBlog from "../hooks/useDeleteBlog";
 import useDeleteImage from "../hooks/useDeleteImage";
 import { convertTipTapToHtml } from "../utils/convertTipTapToHtml";
+import formatDate from "../utils/formatDate";
 import AlertDialogBox from "./AlertDialogBox";
 
 const BlogDetail = () => {
@@ -32,6 +42,7 @@ const BlogDetail = () => {
   const { mutateAsync: deleteBlog, isPending: deletingBlog } = useDeleteBlog();
   const { mutateAsync: deleteImage, isPending: deletingImage } =
     useDeleteImage();
+  const isBase = useBreakpointValue({ base: true, md: false });
 
   const handleDelete = async () => {
     await deleteBlog(id!, {
@@ -81,16 +92,15 @@ const BlogDetail = () => {
           </Box>
         ) : (
           <>
-            <Heading fontSize={{ base: "2xl", md: "4xl" }} lineHeight="short">
+            <Heading color="white" fontSize="4xl" lineHeight="short">
               {blog?.title}
             </Heading>
 
             <Box
               display="flex"
               width="100%"
-              flexDirection={{ base: "column", md: "row" }}
               justifyContent="space-between"
-              alignItems={{ base: "flex-start", md: "center" }}
+              alignItems="center"
               gap={{ base: 6, md: 0 }}
             >
               <HStack spacing={2} wrap="wrap">
@@ -101,44 +111,72 @@ const BlogDetail = () => {
                   boxSize="30px"
                   borderRadius="full"
                 />
-                <Text fontWeight="medium" fontSize={{ base: "xs", md: "md" }}>
+                <Text
+                  color="white"
+                  fontWeight="medium"
+                  fontSize={{ base: "sm", md: "md" }}
+                >
                   {typeof blog?.author === "object" && blog.author.name}
                 </Text>
-                <Text color="gray.500" fontSize={{ base: "xs", md: "md" }}>
-                  {blog?.createdAt
-                    ? new Date(blog.createdAt).toLocaleDateString()
-                    : ""}
+                <Text color="gray.500" fontSize={{ base: "xs", md: "sm" }}>
+                  {blog && formatDate(blog)}
                 </Text>
-                <Text color="gray.500" fontSize={{ base: "xs", md: "md" }}>
+                <Text color="gray.500" fontSize={{ base: "xs", md: "sm" }}>
                   · {blog?.readTime} min read
                 </Text>
               </HStack>
 
               {user &&
-                user._id ===
-                  (typeof blog?.author === "object"
-                    ? blog?.author._id
-                    : blog?.author) && (
-                  <HStack>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      colorScheme="blue"
-                      fontWeight="normal"
-                    >
+              user._id ===
+                (typeof blog?.author === "object"
+                  ? blog?.author._id
+                  : blog?.author) &&
+              isBase ? (
+                <Menu>
+                  <MenuButton
+                    as={IconButton}
+                    icon={<BsThreeDotsVertical />}
+                    variant="ghost"
+                    size="sm"
+                    aria-label="Options"
+                    borderRadius="full"
+                  />
+                  <MenuList shadow="lg" borderRadius="md" py={1}>
+                    <MenuItem icon={<Icon as={FiEdit2} boxSize={4} />}>
                       Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      colorScheme="red"
-                      fontWeight="normal"
+                    </MenuItem>
+                    <MenuItem
+                      icon={<Icon as={FiTrash2} boxSize={4} />}
                       onClick={onOpen}
                     >
                       Delete
-                    </Button>
-                  </HStack>
-                )}
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : (
+                <HStack spacing={3}>
+                  <Button
+                    size="sm"
+                    leftIcon={<Icon as={FiEdit2} />}
+                    colorScheme="blue"
+                    variant="outline"
+                    fontWeight="normal"
+                  >
+                    Edit
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    leftIcon={<Icon as={FiTrash2} />}
+                    colorScheme="red"
+                    variant="outline"
+                    onClick={onOpen}
+                    fontWeight="normal"
+                  >
+                    Delete
+                  </Button>
+                </HStack>
+              )}
             </Box>
 
             <Image
@@ -150,6 +188,7 @@ const BlogDetail = () => {
               borderRadius="2xl"
             />
             <Box
+              color="white"
               lineHeight="tall"
               dangerouslySetInnerHTML={{
                 __html: convertTipTapToHtml(blog?.content),

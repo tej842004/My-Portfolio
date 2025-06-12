@@ -31,7 +31,7 @@ const Blogs = () => {
       {!isLoading && !error && blogs && (
         <AboutSectionStack>
           {blogs.pages.map((page) =>
-            page.data.map((blog, index) => {
+            page.data.slice(0, 3).map((blog, index) => {
               const createdAt = formatDate(blog);
               return (
                 <Link to={`/detail/${blog._id}`}>

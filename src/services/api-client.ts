@@ -14,6 +14,7 @@ export interface FetchResponse<T> {
 
 const axiosInstance = axios.create({
   baseURL: "https://portfolio-backend-duhc.onrender.com",
+  // baseURL: "http://localhost:3000",
 });
 
 // Attach token to every request

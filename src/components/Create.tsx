@@ -14,6 +14,7 @@ import GenreSelector from "./GenreSelector";
 import ImageInput from "./ImageInput";
 import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
+import CustomEnterExtension from "../utils/CustomEnterExtension";
 
 const TiptapEditor = () => {
   const { user } = useAuth();
@@ -42,6 +43,7 @@ const TiptapEditor = () => {
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      CustomEnterExtension,
     ],
     content: "<p>Write something</p>",
   });
