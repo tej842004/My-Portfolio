@@ -12,10 +12,9 @@ import {
   MenuList,
   Spinner,
   Text,
-  useBreakpointValue,
   useDisclosure,
   useToast,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import type { AxiosError } from "axios";
 import { useRef } from "react";
@@ -42,7 +41,6 @@ const BlogDetail = () => {
   const { mutateAsync: deleteBlog, isPending: deletingBlog } = useDeleteBlog();
   const { mutateAsync: deleteImage, isPending: deletingImage } =
     useDeleteImage();
-  const isBase = useBreakpointValue({ base: true, md: false }, { ssr: false });
 
   const handleDelete = async () => {
     await deleteBlog(id!, {
@@ -127,56 +125,60 @@ const BlogDetail = () => {
               </HStack>
 
               {user &&
-              user._id ===
-                (typeof blog?.author === "object"
-                  ? blog?.author._id
-                  : blog?.author) &&
-              isBase ? (
-                <Menu>
-                  <MenuButton
-                    as={IconButton}
-                    icon={<BsThreeDotsVertical />}
-                    variant="ghost"
-                    size="sm"
-                    aria-label="Options"
-                    borderRadius="full"
-                  />
-                  <MenuList shadow="lg" borderRadius="md" py={1}>
-                    <MenuItem icon={<Icon as={FiEdit2} boxSize={4} />}>
-                      Edit
-                    </MenuItem>
-                    <MenuItem
-                      icon={<Icon as={FiTrash2} boxSize={4} />}
-                      onClick={onOpen}
-                    >
-                      Delete
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              ) : (
-                <HStack spacing={3}>
-                  <Button
-                    size="sm"
-                    leftIcon={<Icon as={FiEdit2} />}
-                    colorScheme="blue"
-                    variant="outline"
-                    fontWeight="normal"
-                  >
-                    Edit
-                  </Button>
+                user._id ===
+                  (typeof blog?.author === "object"
+                    ? blog?.author._id
+                    : blog?.author) && (
+                  <>
+                    {/* Responsive button group */}
+                    <HStack spacing={3} display={{ base: "none", md: "flex" }}>
+                      <Button
+                        size="sm"
+                        leftIcon={<Icon as={FiEdit2} />}
+                        colorScheme="blue"
+                        variant="outline"
+                        fontWeight="normal"
+                      >
+                        Edit
+                      </Button>
 
-                  <Button
-                    size="sm"
-                    leftIcon={<Icon as={FiTrash2} />}
-                    colorScheme="red"
-                    variant="outline"
-                    onClick={onOpen}
-                    fontWeight="normal"
-                  >
-                    Delete
-                  </Button>
-                </HStack>
-              )}
+                      <Button
+                        size="sm"
+                        leftIcon={<Icon as={FiTrash2} />}
+                        colorScheme="red"
+                        variant="outline"
+                        onClick={onOpen}
+                        fontWeight="normal"
+                      >
+                        Delete
+                      </Button>
+                    </HStack>
+
+                    {/* Responsive menu button for small screens */}
+                    <Menu>
+                      <MenuButton
+                        as={IconButton}
+                        icon={<BsThreeDotsVertical />}
+                        variant="ghost"
+                        size="sm"
+                        aria-label="Options"
+                        borderRadius="full"
+                        display={{ base: "flex", md: "none" }}
+                      />
+                      <MenuList shadow="lg" borderRadius="md" py={1}>
+                        <MenuItem icon={<Icon as={FiEdit2} boxSize={4} />}>
+                          Edit
+                        </MenuItem>
+                        <MenuItem
+                          icon={<Icon as={FiTrash2} boxSize={4} />}
+                          onClick={onOpen}
+                        >
+                          Delete
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </>
+                )}
             </Box>
 
             <Image
