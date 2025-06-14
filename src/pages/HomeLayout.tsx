@@ -1,5 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
-import Home from "../components/Home";
+import Home from "../components/Home/Home";
 
 const HomeLayout = () => {
   return (

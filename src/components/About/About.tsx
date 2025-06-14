@@ -1,11 +1,11 @@
 import { Box, VStack } from "@chakra-ui/react";
-import Blogs from "./About/Blogs";
-import Education from "./About/Education";
-import Experience from "./About/Experience";
-import GetInTouch from "./About/GetInTouch";
-import Projects from "./About/Projects";
-import Skills from "./About/Skills";
-import Testimonial from "./About/Testimonial";
+import Blogs from "./Blogs";
+import Education from "./Education";
+import Experience from "./Experience";
+import GetInTouch from "./GetInTouch";
+import Projects from "./Projects";
+import Skills from "./Skills";
+import Testimonial from "./Testimonial";
 
 const About = () => {
   return (

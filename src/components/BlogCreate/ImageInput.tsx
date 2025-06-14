@@ -24,7 +24,7 @@ import { useCallback, useRef, useState } from "react";
 import type { Area } from "react-easy-crop";
 import Cropper from "react-easy-crop";
 import { MdUpload } from "react-icons/md";
-import getCroppedImg from "../utils/cropImage";
+import getCroppedImg from "../../utils/cropImage";
 
 const ImageInput = ({
   onImageChange,

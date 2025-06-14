@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
-import type { Blog } from "../entitles/Blog";
-import APIClient, { type FetchResponse } from "../services/api-client";
+import type { Project } from "../../entitles/Project";
+import APIClient, { type FetchResponse } from "../../services/api-client";
 
-const apiClient = new APIClient<Blog>("/api/blogs");
+const apiClient = new APIClient<Project>("/api/projects");
 
-const useBlogs = () =>
-  useInfiniteQuery<FetchResponse<Blog>>({
-    queryKey: ["blogs"],
+const useProjects = () =>
+  useInfiniteQuery<FetchResponse<Project>>({
+    queryKey: ["projects"],
     queryFn: ({ pageParam }) =>
       apiClient.getAll({
         params: {
@@ -26,4 +26,4 @@ const useBlogs = () =>
     },
   });
 
-export default useBlogs;
+export default useProjects;

@@ -19,8 +19,8 @@ import { useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router";
-import useAuth from "../auth/useAuth";
-import auth from "../services/auth";
+import useAuth from "../../auth/useAuth";
+import auth from "../../services/auth";
 
 interface Login {
   email: string;

@@ -19,7 +19,7 @@ import { useState } from "react";
 import { CiLock, CiMail, CiUser } from "react-icons/ci";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { Link, useNavigate } from "react-router";
-import users from "../services/users";
+import users from "../../services/users";
 
 interface Register {
   name: string;

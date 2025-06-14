@@ -1,8 +1,8 @@
 import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router";
-import useBlogs from "../hooks/useBlogs";
-import { convertTipTapToHtml } from "../utils/convertTipTapToHtml";
+import useBlogs from "../../hooks/Blog/useBlogs";
+import { convertTipTapToHtml } from "../../utils/convertTipTapToHtml";
 import SearchInput from "./SearchInput";
 
 const Home = () => {

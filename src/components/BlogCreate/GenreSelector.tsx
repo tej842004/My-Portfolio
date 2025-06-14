@@ -1,8 +1,8 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import useGenre from "../hooks/useGenre";
-import useGenres from "../hooks/useGenres";
-import usePortfolioQueryStore from "../store/store";
+import useGenre from "../../hooks/Genre/useGenre";
+import useGenres from "../../hooks/Genre/useGenres";
+import usePortfolioQueryStore from "../../store/store";
 
 const GenreSelector = () => {
   const { data: genres } = useGenres();

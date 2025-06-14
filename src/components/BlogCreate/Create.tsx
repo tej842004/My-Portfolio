@@ -5,16 +5,16 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { AxiosError } from "axios";
 import { useState } from "react";
-import useAuth from "../auth/useAuth";
-import useCreateBlog from "../hooks/useCreateBlog";
-import useCreateImage from "../hooks/useCreateImage";
-import useGenre from "../hooks/useGenre";
-import usePortfolioQueryStore from "../store/store";
+import useAuth from "../../auth/useAuth";
+import useCreateBlog from "../../hooks/Blog/useCreateBlog";
+import useGenre from "../../hooks/Genre/useGenre";
+import useCreateImage from "../../hooks/Image/useCreateImage";
+import usePortfolioQueryStore from "../../store/store";
+import CustomEnterExtension from "../../utils/CustomEnterExtension";
 import GenreSelector from "./GenreSelector";
 import ImageInput from "./ImageInput";
 import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
-import CustomEnterExtension from "../utils/CustomEnterExtension";
 
 const TiptapEditor = () => {
   const { user } = useAuth();

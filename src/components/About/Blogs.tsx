@@ -1,6 +1,6 @@
 import { Box, Spinner, Text } from "@chakra-ui/react";
 import { Link } from "react-router";
-import useBlogs from "../../hooks/useBlogs";
+import useBlogs from "../../hooks/Blog/useBlogs";
 import formatDate from "../../utils/formatDate";
 import AboutLabel from "./AboutLabel";
 import AboutSection from "./AboutSection";

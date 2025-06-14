@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import APIClient from "../services/api-client";
+import APIClient from "../../services/api-client";
 
 interface FetchResponse {
   imageUrl: string;

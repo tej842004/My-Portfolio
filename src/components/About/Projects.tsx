@@ -7,7 +7,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { HiChevronDown } from "react-icons/hi2";
-import useProjects from "../../hooks/useProjects";
+import useProjects from "../../hooks/Project/useProjects";
 import AboutSection from "./AboutSection";
 import ProjectCard from "./ProjectCard";
 
