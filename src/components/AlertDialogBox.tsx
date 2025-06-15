@@ -13,18 +13,16 @@ interface AlertDialogBoxProps {
   isOpen: boolean;
   cancelRef: RefObject<HTMLButtonElement | null>;
   onClose: () => void;
-  handleDelete: () => void;
-  deletingImage?: boolean;
-  deletingBlog?: boolean;
+  onConfirm: () => void;
+  isLoading: boolean;
 }
 
 const AlertDialogBox = ({
   isOpen,
   cancelRef,
   onClose,
-  handleDelete,
-  deletingImage,
-  deletingBlog,
+  onConfirm,
+  isLoading,
 }: AlertDialogBoxProps) => {
   return (
     <AlertDialog
@@ -36,12 +34,10 @@ const AlertDialogBox = ({
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Blog
+            Delete
           </AlertDialogHeader>
 
-          <AlertDialogBody>
-            Are you sure you want to delete this blog?
-          </AlertDialogBody>
+          <AlertDialogBody>Are you sure you want to delete?</AlertDialogBody>
 
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
@@ -49,9 +45,9 @@ const AlertDialogBox = ({
             </Button>
             <Button
               colorScheme="red"
-              onClick={handleDelete}
+              onClick={onConfirm}
               ml={3}
-              isLoading={deletingBlog || deletingImage}
+              isLoading={isLoading}
             >
               Yes
             </Button>

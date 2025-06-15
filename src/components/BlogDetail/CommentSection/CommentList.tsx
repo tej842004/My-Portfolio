@@ -9,35 +9,64 @@ import {
   MenuList,
   Spinner,
   Text,
+  useDisclosure,
   VStack,
 } from "@chakra-ui/react";
+import type {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+} from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdDelete, MdEdit } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Prashant from "../../../assets/images/prash.jpg";
-import useDeleteComment from "../../../hooks/Comment/useDeleteComment";
-import useGetComment from "../../../hooks/Comment/useGetComments";
 import useAuth from "../../../auth/useAuth";
+import type Comment from "../../../entitles/Comment";
+import useComment from "../../../hooks/Comment/useComment";
+import useDeleteComment from "../../../hooks/Comment/useDeleteComment";
+import type { FetchResponse } from "../../../services/api-client";
+import AlertDialogBox from "../../AlertDialogBox";
 
-const CommentList = ({ blogId }: { blogId: string }) => {
+type FetchNextPageFn = (
+  options?: FetchNextPageOptions
+) => Promise<
+  InfiniteQueryObserverResult<InfiniteData<FetchResponse<Comment>>, Error>
+>;
+
+interface Props {
+  comments?: InfiniteData<FetchResponse<Comment>>;
+  commentsLoading: boolean;
+  commentsError?: Error | null;
+  hasNextPage: boolean;
+  fetchNextPage: FetchNextPageFn;
+  fetchCommentCount: number;
+  isEmpty: boolean | undefined;
+}
+
+const CommentList = ({
+  comments,
+  commentsLoading,
+  commentsError,
+  hasNextPage,
+  fetchNextPage,
+  fetchCommentCount,
+  isEmpty,
+}: Props) => {
   const { user } = useAuth();
-  const {
-    data: comments,
-    isLoading: commentsLoading,
-    error: commentsError,
-    hasNextPage,
-    fetchNextPage,
-  } = useGetComment(blogId);
-
-  const { mutateAsync: deleteComment } = useDeleteComment();
-
-  const isEmpty =
-    !commentsLoading &&
-    comments &&
-    comments.pages.every((page) => page.data.length === 0);
-
-  const fetchCommentCount =
-    comments?.pages.reduce((total, page) => total + page.data.length, 0) || 0;
+  const cancelRef = useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
+    null
+  );
+  const { mutateAsync: deleteComment, isPending: deleteCommentLoading } =
+    useDeleteComment();
+  const { handleDelete } = useComment({
+    deleteComment,
+    onClose,
+    setSelectedCommentId,
+  });
 
   if (commentsError) return null;
 
@@ -107,12 +136,9 @@ const CommentList = ({ blogId }: { blogId: string }) => {
                             </MenuItem>
                             <MenuItem
                               icon={<MdDelete />}
-                              onClick={async () => {
-                                try {
-                                  await deleteComment(comment._id);
-                                } catch (error) {
-                                  console.error(error);
-                                }
+                              onClick={() => {
+                                setSelectedCommentId(comment._id);
+                                onOpen();
                               }}
                               color="red.400"
                             >
@@ -124,6 +150,13 @@ const CommentList = ({ blogId }: { blogId: string }) => {
                     </HStack>
                     <Text>{comment.comment}</Text>
                   </Box>
+                  <AlertDialogBox
+                    isOpen={isOpen}
+                    cancelRef={cancelRef}
+                    isLoading={deleteCommentLoading}
+                    onConfirm={() => handleDelete(selectedCommentId!)}
+                    onClose={onClose}
+                  />
                 </HStack>
               ))
             )}
