@@ -14,7 +14,7 @@ export interface FetchResponse<T> {
 
 const axiosInstance = axios.create({
   // baseURL: "https://portfolio-backend-duhc.onrender.com",
-  // baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3000",
 });
 
 // Attach token to every request
@@ -33,9 +33,11 @@ class APIClient<ResponseType> {
     this.endpoint = endpoint;
   }
 
-  getAll = async (config?: AxiosRequestConfig) => {
+  getAll = async (config?: AxiosRequestConfig, id?: number | string) => {
+    const endpoint = id ? `${this.endpoint}/${id}` : this.endpoint;
+
     const res = await axiosInstance.get<FetchResponse<ResponseType>>(
-      this.endpoint,
+      endpoint,
       config
     );
     return res.data;
@@ -48,13 +50,11 @@ class APIClient<ResponseType> {
 
   post = async <RequestType = any>(
     data: RequestType,
+    id?: number | string,
     config?: AxiosRequestConfig
   ) => {
-    const res = await axiosInstance.post<ResponseType>(
-      this.endpoint,
-      data,
-      config
-    );
+    const endpoint = id ? `${this.endpoint}/${id}` : this.endpoint;
+    const res = await axiosInstance.post<ResponseType>(endpoint, data, config);
     return res.data;
   };
 

@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router";
-import About from "./components/About/About";
+import About from "./components/AboutMe/About";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Create from "./components/BlogCreate/Create";
-import BlogDetail from "./components/BlogDetail/BlogDetail";
+import Detail from "./components/BlogDetail/Detail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomeLayout from "./pages/HomeLayout";
 import Layout from "./pages/Layout";
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: "/about", element: <About /> },
-      { path: "/detail/:id", element: <BlogDetail /> },
+      { path: "/detail/:id", element: <Detail /> },
       { path: "/signup", element: <Register /> },
       { path: "/login", element: <Login /> },
     ],

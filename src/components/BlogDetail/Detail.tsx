@@ -12,16 +12,17 @@ import Prashant from "../../assets/images/prash.jpg";
 import useBlog from "../../hooks/Blog/useBlog";
 import { convertTipTapToHtml } from "../../utils/convertTipTapToHtml";
 import formatDate from "../../utils/formatDate";
+import CommentSection from "./CommentSection/CommentSection";
 
-const BlogDetail = () => {
+const Detail = () => {
   const { id } = useParams();
-  const { data: blog, isLoading, error } = useBlog(id!);
+  const { data: blog, isLoading: blogLoading, error: blogError } = useBlog(id!);
 
-  if (error) return null;
+  if (blogError) return null;
 
   return (
     <VStack align="stretch" spacing={6} mt={10}>
-      {isLoading ? (
+      {blogLoading && (
         <Box
           display="flex"
           justifyContent="center"
@@ -31,9 +32,11 @@ const BlogDetail = () => {
         >
           <Spinner />
         </Box>
-      ) : (
+      )}
+
+      {!blogLoading && blog && (
         <>
-          <Heading color="white" fontSize="4xl" lineHeight="short">
+          <Heading fontSize="4xl" lineHeight="short">
             {blog?.title}
           </Heading>
 
@@ -52,11 +55,7 @@ const BlogDetail = () => {
                 boxSize="30px"
                 borderRadius="full"
               />
-              <Text
-                color="white"
-                fontWeight="medium"
-                fontSize={{ base: "sm", md: "md" }}
-              >
+              <Text fontWeight="medium" fontSize={{ base: "sm", md: "md" }}>
                 {typeof blog?.author === "object" && blog.author.name}
               </Text>
               <Text color="gray.500" fontSize={{ base: "xs", md: "sm" }}>
@@ -77,7 +76,6 @@ const BlogDetail = () => {
             borderRadius="2xl"
           />
           <Box
-            color="white"
             lineHeight="tall"
             dangerouslySetInnerHTML={{
               __html: convertTipTapToHtml(blog?.content),
@@ -85,8 +83,10 @@ const BlogDetail = () => {
           />
         </>
       )}
+
+      <CommentSection blogId={id!} />
     </VStack>
   );
 };
 
-export default BlogDetail;
+export default Detail;

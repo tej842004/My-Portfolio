@@ -3,7 +3,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router";
 import useBlogs from "../../hooks/Blog/useBlogs";
 import { convertTipTapToHtml } from "../../utils/convertTipTapToHtml";
-import SearchInput from "./SearchInput";
 
 const Home = () => {
   const {
@@ -24,12 +23,9 @@ const Home = () => {
 
   return (
     <Box as="section" role="region" aria-label="Latest Posts">
-      <Box display="flex" justifyContent="space-between" width="100%">
-        <Text fontSize="2xl" mb={6}>
-          Latest Posts
-        </Text>
-        <SearchInput />
-      </Box>
+      <Text fontSize="2xl" mb={6}>
+        Latest Posts
+      </Text>
 
       {isEmpty && (
         <Box
