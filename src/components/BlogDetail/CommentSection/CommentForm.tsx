@@ -18,9 +18,15 @@ const CommentForm = ({ blogId }: { blogId: string }) => {
   const handleSubmit = async ({ commentInput }: { commentInput: string }) => {
     try {
       await mutateAsync(commentInput);
+      toast({
+        title: "Comment created.",
+        description: "Your comment has been successfully created.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch (err) {
       const error = err as AxiosError;
-
       toast({
         title: "Error creating blog",
         description:
