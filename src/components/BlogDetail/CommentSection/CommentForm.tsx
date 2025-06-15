@@ -1,16 +1,36 @@
-import { Avatar, Button, HStack, Textarea, VStack } from "@chakra-ui/react";
+import {
+  Avatar,
+  Button,
+  HStack,
+  Textarea,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
+import type { AxiosError } from "axios";
 import { Formik } from "formik";
 import Prashant from "../../../assets/images/prash.jpg";
 import useCreateComment from "../../../hooks/Comment/useCreateComment";
 
 const CommentForm = ({ blogId }: { blogId: string }) => {
+  const toast = useToast();
   const { mutateAsync, isPending } = useCreateComment(blogId);
 
   const handleSubmit = async ({ commentInput }: { commentInput: string }) => {
     try {
       await mutateAsync(commentInput);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      const error = err as AxiosError;
+
+      toast({
+        title: "Error creating blog",
+        description:
+          typeof error.response?.data === "string"
+            ? error.response.data
+            : JSON.stringify(error.response?.data),
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
     }
   };
 
