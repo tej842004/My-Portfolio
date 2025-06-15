@@ -13,7 +13,7 @@ const useCreateImage = () => {
     mutationFn: async (imageFile: File) => {
       const formData = new FormData();
       formData.append("image", imageFile);
-      return await apiClient.post(formData, {
+      return await apiClient.post(formData, undefined, {
         headers: { "Content-Type": "multipart/form-data" },
       });
     },
