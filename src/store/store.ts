@@ -6,7 +6,7 @@ interface PortfolioQuery {
 
 interface PortfolioQueryStore {
   portfolioQuery: PortfolioQuery;
-  setGenreId: (genreId: string) => void;
+  setGenreId: (genreId: string | undefined) => void;
 }
 
 const usePortfolioQueryStore = create<PortfolioQueryStore>((set) => ({

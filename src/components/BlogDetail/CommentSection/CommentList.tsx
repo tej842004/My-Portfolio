@@ -24,7 +24,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Prashant from "../../../assets/images/prash.jpg";
 import useAuth from "../../../auth/useAuth";
 import type Comment from "../../../entitles/Comment";
-import useComment from "../../../hooks/Comment/useComment";
+import useHandleCommentDeletion from "../../../hooks/Comment/useHandleCommentDeletion";
 import useDeleteComment from "../../../hooks/Comment/useDeleteComment";
 import type { FetchResponse } from "../../../services/api-client";
 import AlertDialogBox from "../../AlertDialogBox";
@@ -62,7 +62,7 @@ const CommentList = ({
   );
   const { mutateAsync: deleteComment, isPending: deleteCommentLoading } =
     useDeleteComment();
-  const { handleDelete } = useComment({
+  const { handleDelete } = useHandleCommentDeletion({
     deleteComment,
     onClose,
     setSelectedCommentId,

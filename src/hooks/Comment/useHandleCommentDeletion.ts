@@ -3,13 +3,17 @@ import type { UseMutateAsyncFunction } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import type { Dispatch, SetStateAction } from "react";
 
-interface UseCommentProps {
+interface Props {
   deleteComment: UseMutateAsyncFunction<any, Error, string, unknown>;
   onClose: () => void;
   setSelectedCommentId: Dispatch<SetStateAction<string | null>>;
 }
 
-const useComment = ({ deleteComment, onClose, setSelectedCommentId }: UseCommentProps) => {
+const useHandleCommentDeletion = ({
+  deleteComment,
+  onClose,
+  setSelectedCommentId,
+}: Props) => {
   const toast = useToast();
 
   const handleDelete = async (commentId: string) => {
@@ -35,4 +39,4 @@ const useComment = ({ deleteComment, onClose, setSelectedCommentId }: UseComment
   return { handleDelete };
 };
 
-export default useComment;
+export default useHandleCommentDeletion;
