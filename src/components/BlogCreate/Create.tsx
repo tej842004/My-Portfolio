@@ -26,6 +26,7 @@ import useHandleBlogSubmission from "../../hooks/Blog/useHandleBlogSubmission";
 import useHandleBlogDeletion from "../../hooks/Blog/User/useHandleBlogDeletion";
 import useUserBlogs from "../../hooks/Blog/User/useUserBlogs";
 import useTipTapEditor from "../../hooks/Blog/useTipTapEditor";
+import useUpdateBlog from "../../hooks/Blog/useUpdateBlog";
 import useGenre from "../../hooks/Genre/useGenre";
 import useCreateImage from "../../hooks/Image/useCreateImage";
 import useDeleteImage from "../../hooks/Image/useDeleteImage";
@@ -43,8 +44,14 @@ const Create = () => {
   const { titleEditor, bodyEditor } = useTipTapEditor();
   const [selectedPost, setSelectedPost] = useState<Blog>({} as Blog);
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
-  const { isPending: createBlogLoading, mutateAsync: createBlog } =
+  const [editingBlog, setEditingBlog] = useState<Blog | undefined>(undefined);
+  const [initialImage, setInitialImage] = useState<string | undefined>(
+    undefined
+  );
+  const { mutateAsync: createBlog, isPending: createBlogLoading } =
     useCreateBlog();
+  const { mutateAsync: updateBlog, isPending: updateBlogLoading } =
+    useUpdateBlog();
   const { mutateAsync: deleteUserPost, isPending: deletingUserPostLoading } =
     useDeleteBlog();
   const { mutateAsync: uploadImage, isPending: uploadImageLoading } =
@@ -75,6 +82,9 @@ const Create = () => {
     setTags,
     tags,
     uploadImage,
+    editingBlog,
+    deleteImage,
+    updateBlog,
   });
 
   const { handleDelete } = useHandleBlogDeletion({
@@ -84,10 +94,6 @@ const Create = () => {
     selectedPost,
   });
 
-  const [initialImage, setInitialImage] = useState<string | undefined>(
-    undefined
-  );
-
   const selectedGenreId = usePortfolioQueryStore(
     (s) => s.portfolioQuery.genreId
   );
@@ -95,12 +101,13 @@ const Create = () => {
   const selectedGenre = useGenre(selectedGenreId);
 
   const handleEdit = (blog: Blog) => {
+    setTags(blog.tags!);
+    setEditingBlog(blog);
     titleEditor?.commands.setContent(blog.title!);
     bodyEditor?.commands.setContent(blog.content!);
-    setTags(blog.tags!);
     setInitialImage(blog.imageUrl);
     setSelectedGenreId(
-      typeof blog.genreId === "object" ? blog.genreId._id : blog.genreId
+      typeof blog.genre === "object" ? blog.genre._id : blog.genre
     );
   };
 
@@ -158,9 +165,14 @@ const Create = () => {
           colorScheme="blue"
           onClick={handleSave}
           width="100%"
-          isLoading={createBlogLoading || uploadImageLoading}
+          isLoading={
+            createBlogLoading ||
+            updateBlogLoading ||
+            deletingImageLoading ||
+            uploadImageLoading
+          }
         >
-          Submit
+          {editingBlog ? "Update" : "Submit"}
         </Button>
       </VStack>
 
@@ -205,8 +217,13 @@ const Create = () => {
             {blogs.pages.map((page) =>
               page.data.map((blog, index) => {
                 return (
-                  <HStack justify="space-between" align="flex-start" mb={8}>
-                    <Box as="article" key={index}>
+                  <HStack
+                    justify="space-between"
+                    align="flex-start"
+                    mb={8}
+                    key={index}
+                  >
+                    <Box as="article">
                       <Link to={`/detail/${blog._id}`}>
                         <Heading as="h2" size="lg" mb={1}>
                           {blog.title}

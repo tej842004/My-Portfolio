@@ -23,6 +23,9 @@ const useHandleBlogDeletion = ({
   const toast = useToast();
 
   const handleDelete = async () => {
+    if (!selectedPost?.imagePublicId || !selectedPost._id) return;
+    await deleteImage({ public_id: selectedPost.imagePublicId });
+
     await deleteUserPost(selectedPost._id!, {
       onSuccess: () => {
         toast({
@@ -48,9 +51,6 @@ const useHandleBlogDeletion = ({
         });
       },
     });
-
-    if (!selectedPost?.imagePublicId || !selectedPost._id) return;
-    await deleteImage({ public_id: selectedPost.imagePublicId });
   };
 
   return { handleDelete };

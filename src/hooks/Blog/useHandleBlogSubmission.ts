@@ -2,27 +2,41 @@ import { useToast } from "@chakra-ui/react";
 import type { UseMutateAsyncFunction } from "@tanstack/react-query";
 import type { Editor } from "@tiptap/core";
 import type { AxiosError } from "axios";
-import type { SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../../auth/useAuth";
 import type { Blog } from "../../entitles/Blog";
 import usePortfolioQueryStore from "../../store/store";
-import useGenre from "../Genre/useGenre";
 
 interface FetchResponse {
   imageUrl: string;
   public_id: string;
 }
 
+interface DeleteImage {
+  public_id: string;
+}
+
 interface Props {
-  titleEditor: Editor | null;
-  bodyEditor: Editor | null;
-  imageFile: File | undefined;
   tags: string[];
-  setTags: React.Dispatch<SetStateAction<string[]>>;
+  bodyEditor: Editor | null;
+  titleEditor: Editor | null;
+  imageFile: File | undefined;
+  editingBlog: Blog | undefined;
+  setTags: Dispatch<SetStateAction<string[]>>;
+  setImageFile: Dispatch<SetStateAction<File | undefined>>;
   createBlog: UseMutateAsyncFunction<Blog, Error, Blog, unknown>;
-  setImageFile: React.Dispatch<SetStateAction<File | undefined>>;
+  deleteImage: UseMutateAsyncFunction<Blog, Error, DeleteImage, unknown>;
   uploadImage: UseMutateAsyncFunction<FetchResponse, Error, File, unknown>;
+  updateBlog: UseMutateAsyncFunction<
+    any,
+    Error,
+    {
+      id: string | undefined;
+      blog: Blog | undefined;
+    },
+    unknown
+  >;
 }
 
 const useHandleBlogSubmission = ({
@@ -34,6 +48,9 @@ const useHandleBlogSubmission = ({
   createBlog,
   setImageFile,
   setTags,
+  editingBlog,
+  deleteImage,
+  updateBlog,
 }: Props) => {
   const toast = useToast();
   const { user } = useAuth();
@@ -42,12 +59,17 @@ const useHandleBlogSubmission = ({
   const selectedGenreId = usePortfolioQueryStore(
     (s) => s.portfolioQuery.genreId
   );
-  const selectedGenre = useGenre(selectedGenreId);
 
   const handleSave = async () => {
     try {
-      let imageUrl = "";
-      let imagePublicId = "";
+      let imageUrl = editingBlog?.imageUrl || "";
+      let imagePublicId = editingBlog?.imagePublicId || "";
+
+      if (editingBlog && imageFile) {
+        if (editingBlog.imagePublicId) {
+          await deleteImage({ public_id: editingBlog.imagePublicId });
+        }
+      }
 
       if (imageFile) {
         const imageResult = await uploadImage(imageFile);
@@ -55,31 +77,58 @@ const useHandleBlogSubmission = ({
         imagePublicId = imageResult.public_id;
       }
 
-      const { _id } = await createBlog({
-        title: titleEditor?.getText(),
-        content: bodyEditor?.getJSON(),
-        tags,
-        genreId: selectedGenre?._id,
-        imageUrl,
-        imagePublicId,
-        author: user?._id,
-      });
+      if (!editingBlog) {
+        const { _id } = await createBlog({
+          title: titleEditor?.getText(),
+          content: bodyEditor?.getJSON(),
+          tags,
+          genre: selectedGenreId,
+          imageUrl,
+          imagePublicId,
+          author: user?._id,
+        });
 
-      toast({
-        title: "Blog created.",
-        description: "Your blog has been successfully posted.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+        toast({
+          title: "Blog created.",
+          description: "Your blog has been successfully posted.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        navigate(`/detail/${_id}`);
+      } else {
+        const params: { id: string | undefined; blog: Blog | undefined } = {
+          id: editingBlog._id,
+          blog: {
+            title: titleEditor?.getText(),
+            content: bodyEditor?.getJSON(),
+            tags: tags,
+            author: user?._id,
+            genre: selectedGenreId,
+            imageUrl,
+            imagePublicId,
+          },
+        };
+
+        await updateBlog(params);
+
+        toast({
+          title: "Blog updated.",
+          description: "Your blog has been successfully updated.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        navigate(`/detail/${editingBlog._id}`);
+      }
 
       titleEditor?.commands.setContent("<p>Write title</p>");
       bodyEditor?.commands.setContent("<p>Write something</p>");
       setTags([]);
       setImageFile(undefined);
       setGenreId(undefined);
-
-      navigate(`/detail/${_id}`);
     } catch (error) {
       const err = error as AxiosError;
 

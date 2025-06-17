@@ -15,7 +15,7 @@ export interface Blog {
   tags?: string[];
   createdAt?: Date;
   readTime?: number;
-  genreId?: string | Genre;
+  genre?: string | Genre;
   imageUrl?: string;
   imagePublicId?: string;
 }

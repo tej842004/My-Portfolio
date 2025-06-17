@@ -11,12 +11,6 @@ const GenreSelector = ({
   setSelectedGenreId: (genreId: string | undefined) => void;
 }) => {
   const { data: genres } = useGenres();
-  // const selectedGenreId = usePortfolioQueryStore(
-  //   (s) => s.portfolioQuery.genreId
-  // );
-  // const setSelectedGenreId = usePortfolioQueryStore((s) => s.setGenreId);
-  // const selectedGenre = useGenre(selectedGenreId);
-
   return (
     <Menu>
       <MenuButton

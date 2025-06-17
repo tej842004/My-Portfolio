@@ -10,8 +10,13 @@ const useUpdateBlog = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, blog }: { id: string; blog: Blog }) =>
-      apiClient.put(id, blog),
+    mutationFn: ({
+      id,
+      blog,
+    }: {
+      id: string | undefined;
+      blog: Blog | undefined;
+    }) => apiClient.put(id!, blog),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["blogs"] });
       queryClient.invalidateQueries({ queryKey: ["userblogs", user?._id] });
