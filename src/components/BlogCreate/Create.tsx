@@ -99,7 +99,9 @@ const Create = () => {
     bodyEditor?.commands.setContent(blog.content!);
     setTags(blog.tags!);
     setInitialImage(blog.imageUrl);
-    setSelectedGenreId(blog.genreId);
+    setSelectedGenreId(
+      typeof blog.genreId === "object" ? blog.genreId._id : blog.genreId
+    );
   };
 
   if (error) return null;

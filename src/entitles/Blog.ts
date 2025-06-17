@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/core";
+import type { Genre } from "./Genre";
 
 interface Author {
   _id: string;
@@ -14,7 +15,7 @@ export interface Blog {
   tags?: string[];
   createdAt?: Date;
   readTime?: number;
-  genreId?: string;
+  genreId?: string | Genre;
   imageUrl?: string;
   imagePublicId?: string;
 }
