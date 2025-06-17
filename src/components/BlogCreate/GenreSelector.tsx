@@ -1,16 +1,21 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import useGenre from "../../hooks/Genre/useGenre";
+import type { Genre } from "../../entitles/Genre";
 import useGenres from "../../hooks/Genre/useGenres";
-import usePortfolioQueryStore from "../../store/store";
 
-const GenreSelector = () => {
+const GenreSelector = ({
+  selectedGenre,
+  setSelectedGenreId,
+}: {
+  selectedGenre: Genre | undefined;
+  setSelectedGenreId: (genreId: string | undefined) => void;
+}) => {
   const { data: genres } = useGenres();
-  const selectedGenreId = usePortfolioQueryStore(
-    (s) => s.portfolioQuery.genreId
-  );
-  const setSelectedGenreId = usePortfolioQueryStore((s) => s.setGenreId);
-  const selectedGenre = useGenre(selectedGenreId);
+  // const selectedGenreId = usePortfolioQueryStore(
+  //   (s) => s.portfolioQuery.genreId
+  // );
+  // const setSelectedGenreId = usePortfolioQueryStore((s) => s.setGenreId);
+  // const selectedGenre = useGenre(selectedGenreId);
 
   return (
     <Menu>

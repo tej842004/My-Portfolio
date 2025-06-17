@@ -20,7 +20,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Area } from "react-easy-crop";
 import Cropper from "react-easy-crop";
 import { MdUpload } from "react-icons/md";
@@ -28,8 +28,10 @@ import getCroppedImg from "../../utils/cropImage";
 
 const ImageInput = ({
   onImageChange,
+  initialImage,
 }: {
   onImageChange: (file: File) => void;
+  initialImage: string | undefined;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
@@ -69,6 +71,10 @@ const ImageInput = ({
     onImageChange(file);
     onClose();
   };
+
+  useEffect(() => {
+    if (initialImage) setFinalPreview(initialImage);
+  }, [initialImage]);
 
   return (
     <VStack spacing={4} align="flex-start" w="full">

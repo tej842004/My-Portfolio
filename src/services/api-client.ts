@@ -58,6 +58,15 @@ class APIClient<ResponseType> {
     return res.data;
   };
 
+  put = async <RequestType = any>(
+    id: string | number,
+    data: RequestType,
+    config?: AxiosRequestConfig
+  ) => {
+    const res = await axiosInstance.put(`${this.endpoint}/${id}`, data, config);
+    return res.data;
+  };
+
   delete = async (id: number | string) => {
     const res = await axiosInstance.delete(`${this.endpoint}/${id}`);
     return res.data;

@@ -26,8 +26,10 @@ import useHandleBlogSubmission from "../../hooks/Blog/useHandleBlogSubmission";
 import useHandleBlogDeletion from "../../hooks/Blog/User/useHandleBlogDeletion";
 import useUserBlogs from "../../hooks/Blog/User/useUserBlogs";
 import useTipTapEditor from "../../hooks/Blog/useTipTapEditor";
+import useGenre from "../../hooks/Genre/useGenre";
 import useCreateImage from "../../hooks/Image/useCreateImage";
 import useDeleteImage from "../../hooks/Image/useDeleteImage";
+import usePortfolioQueryStore from "../../store/store";
 import AlertDialogBox from "../AlertDialogBox";
 import GenreSelector from "./GenreSelector";
 import ImageInput from "./ImageInput";
@@ -35,13 +37,35 @@ import { InlineTagInput } from "./InlineTagInput";
 import Toolbar from "./Toolbar";
 
 const Create = () => {
+  const cancelRef = useRef(null);
   const [tags, setTags] = useState<string[]>([]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { titleEditor, bodyEditor } = useTipTapEditor();
+  const [selectedPost, setSelectedPost] = useState<Blog>({} as Blog);
   const [imageFile, setImageFile] = useState<File | undefined>(undefined);
   const { isPending: createBlogLoading, mutateAsync: createBlog } =
     useCreateBlog();
+  const { mutateAsync: deleteUserPost, isPending: deletingUserPostLoading } =
+    useDeleteBlog();
   const { mutateAsync: uploadImage, isPending: uploadImageLoading } =
     useCreateImage();
+  const { mutateAsync: deleteImage, isPending: deletingImageLoading } =
+    useDeleteImage();
+
+  const {
+    data: blogs,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+  } = useUserBlogs();
+
+  const isEmpty =
+    !isLoading && blogs && blogs.pages.every((page) => page.data.length === 0);
+
+  const fetchBlogCount =
+    blogs?.pages.reduce((total, page) => total + page.data.length, 0) || 0;
+
   const { handleSave } = useHandleBlogSubmission({
     titleEditor,
     bodyEditor,
@@ -53,36 +77,32 @@ const Create = () => {
     uploadImage,
   });
 
-  const cancelRef = useRef(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedPost, setSelectedPost] = useState<Blog>({} as Blog);
-  const {
-    data: blogs,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-  } = useUserBlogs();
-
-  if (error) return null;
-
-  const isEmpty =
-    !isLoading && blogs && blogs.pages.every((page) => page.data.length === 0);
-
-  const fetchBlogCount =
-    blogs?.pages.reduce((total, page) => total + page.data.length, 0) || 0;
-
-  const { mutateAsync: deleteUserPost, isPending: deletingUserPostLoading } =
-    useDeleteBlog();
-  const { mutateAsync: deleteImage, isPending: deletingImageLoading } =
-    useDeleteImage();
-
   const { handleDelete } = useHandleBlogDeletion({
     deleteImage,
     deleteUserPost,
     onClose,
     selectedPost,
   });
+
+  const [initialImage, setInitialImage] = useState<string | undefined>(
+    undefined
+  );
+
+  const selectedGenreId = usePortfolioQueryStore(
+    (s) => s.portfolioQuery.genreId
+  );
+  const setSelectedGenreId = usePortfolioQueryStore((s) => s.setGenreId);
+  const selectedGenre = useGenre(selectedGenreId);
+
+  const handleEdit = (blog: Blog) => {
+    titleEditor?.commands.setContent(blog.title!);
+    bodyEditor?.commands.setContent(blog.content!);
+    setTags(blog.tags!);
+    setInitialImage(blog.imageUrl);
+    setSelectedGenreId(blog.genreId);
+  };
+
+  if (error) return null;
 
   return (
     <>
@@ -123,9 +143,12 @@ const Create = () => {
           <EditorContent editor={bodyEditor} />
         </Box>
 
-        <ImageInput onImageChange={setImageFile} />
+        <ImageInput onImageChange={setImageFile} initialImage={initialImage} />
 
-        <GenreSelector />
+        <GenreSelector
+          selectedGenre={selectedGenre}
+          setSelectedGenreId={setSelectedGenreId}
+        />
 
         <InlineTagInput tags={tags} setTags={setTags} />
 
@@ -204,7 +227,7 @@ const Create = () => {
                       <MenuList>
                         <MenuItem
                           icon={<FiEdit />}
-                          onClick={() => console.log("edit")}
+                          onClick={() => handleEdit(blog)}
                         >
                           Edit
                         </MenuItem>
