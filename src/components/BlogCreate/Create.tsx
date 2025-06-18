@@ -166,10 +166,7 @@ const Create = () => {
           onClick={handleSave}
           width="100%"
           isLoading={
-            createBlogLoading ||
-            updateBlogLoading ||
-            deletingImageLoading ||
-            uploadImageLoading
+            createBlogLoading || updateBlogLoading || uploadImageLoading
           }
         >
           {editingBlog ? "Update" : "Submit"}

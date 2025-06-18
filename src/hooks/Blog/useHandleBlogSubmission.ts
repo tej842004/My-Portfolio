@@ -133,7 +133,7 @@ const useHandleBlogSubmission = ({
       const err = error as AxiosError;
 
       toast({
-        title: "Error creating blog",
+        title: editingBlog ? "Error updating blog" : "Error creating blog",
         description:
           typeof err.response?.data === "string"
             ? err.response.data
