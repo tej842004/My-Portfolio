@@ -20,8 +20,6 @@ const EditComment = ({ updateComment, setUpdateComment }: Props) => {
     updateCommentFn,
   });
 
-  console.log(comment);
-
   return (
     <Box>
       <Textarea
@@ -36,6 +34,7 @@ const EditComment = ({ updateComment, setUpdateComment }: Props) => {
           colorScheme="teal"
           onClick={handleUpdate}
           isLoading={updateCommentLoading}
+          disabled={updateComment.comment === comment}
         >
           Save
         </Button>

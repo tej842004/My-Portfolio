@@ -81,10 +81,10 @@ const Detail = () => {
               __html: convertTipTapToHtml(blog?.content),
             }}
           />
+
+          <CommentSection blogId={id!} />
         </>
       )}
-
-      <CommentSection blogId={id!} />
     </VStack>
   );
 };

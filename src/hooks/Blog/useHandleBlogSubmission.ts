@@ -29,7 +29,7 @@ interface Props {
   deleteImage: UseMutateAsyncFunction<Blog, Error, DeleteImage, unknown>;
   uploadImage: UseMutateAsyncFunction<FetchResponse, Error, File, unknown>;
   updateBlog: UseMutateAsyncFunction<
-    any,
+    Blog,
     Error,
     {
       id: string | undefined;
