@@ -24,10 +24,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Prashant from "../../../assets/images/prash.jpg";
 import useAuth from "../../../auth/useAuth";
 import type Comment from "../../../entitles/Comment";
-import useHandleCommentDeletion from "../../../hooks/Comment/useHandleCommentDeletion";
 import useDeleteComment from "../../../hooks/Comment/useDeleteComment";
+import useHandleCommentDeletion from "../../../hooks/Comment/useHandleCommentDeletion";
 import type { FetchResponse } from "../../../services/api-client";
 import AlertDialogBox from "../../AlertDialogBox";
+import EditComment from "./EditComment";
 
 type FetchNextPageFn = (
   options?: FetchNextPageOptions
@@ -57,6 +58,7 @@ const CommentList = ({
   const { user } = useAuth();
   const cancelRef = useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [updateComment, setUpdateComment] = useState<Comment | null>(null);
   const [selectedCommentId, setSelectedCommentId] = useState<string | null>(
     null
   );
@@ -130,14 +132,16 @@ const CommentList = ({
                           <MenuList>
                             <MenuItem
                               icon={<MdEdit />}
-                              onClick={() => console.log("edit")}
+                              onClick={() => {
+                                setUpdateComment(comment);
+                              }}
                             >
                               Edit
                             </MenuItem>
                             <MenuItem
                               icon={<MdDelete />}
                               onClick={() => {
-                                setSelectedCommentId(comment._id);
+                                setSelectedCommentId(comment._id!);
                                 onOpen();
                               }}
                               color="red.400"
@@ -148,7 +152,14 @@ const CommentList = ({
                         </Menu>
                       )}
                     </HStack>
-                    <Text>{comment.comment}</Text>
+                    {updateComment ? (
+                      <EditComment
+                        setUpdateComment={setUpdateComment}
+                        updateComment={updateComment}
+                      />
+                    ) : (
+                      <Text>{comment.comment}</Text>
+                    )}
                   </Box>
                   <AlertDialogBox
                     isOpen={isOpen}
