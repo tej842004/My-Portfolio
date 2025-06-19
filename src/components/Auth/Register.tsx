@@ -10,54 +10,20 @@ import {
   InputLeftElement,
   InputRightElement,
   Text,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
-import type { AxiosError } from "axios";
 import { Formik } from "formik";
 import { useState } from "react";
 import { CiLock, CiMail, CiUser } from "react-icons/ci";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
+import useHandleRegister from "../../hooks/Auth/useHandleRegister";
 import users from "../../services/users";
 
-interface Register {
-  name: string;
-  email: string;
-  password: string;
-}
-
 const Register = () => {
-  const toast = useToast();
-  const navigate = useNavigate();
-  const { mutateAsync, isPending } = users();
+  const { mutateAsync: register, isPending } = users();
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = async (values: Register) => {
-    try {
-      await mutateAsync(values);
-      toast({
-        title: "Registration successful.",
-        description: "You can now log in with your credentials.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      navigate("/login");
-    } catch (error) {
-      const err = error as AxiosError;
-      toast({
-        title: "Registration failed.",
-        description:
-          typeof err.response?.data === "string"
-            ? err.response.data
-            : JSON.stringify(err.response?.data),
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-      });
-    }
-  };
+  const { handleSubmit } = useHandleRegister({ register });
 
   return (
     <Box maxW="md" mx="auto" mt={10} p={6} boxShadow="md" borderRadius="lg">

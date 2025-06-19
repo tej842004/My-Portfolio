@@ -10,57 +10,20 @@ import {
   InputLeftElement,
   InputRightElement,
   Text,
-  useToast,
   VStack,
 } from "@chakra-ui/react";
-import type { AxiosError } from "axios";
 import { Formik } from "formik";
 import { useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import { Link, useNavigate } from "react-router";
-import useAuth from "../../auth/useAuth";
+import { Link } from "react-router";
+import useHandleLogin from "../../hooks/Auth/useHandleLogin";
 import auth from "../../services/auth";
 
-interface Login {
-  email: string;
-  password: string;
-}
-
 const Login = () => {
-  const { logIn } = useAuth();
-  const toast = useToast();
-  const navigate = useNavigate();
-  const { mutateAsync, isPending } = auth();
+  const { mutateAsync: login, isPending } = auth();
+  const { handleSubmit } = useHandleLogin({ login });
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = async (values: Login) => {
-    try {
-      const authToken = await mutateAsync(values);
-      logIn(authToken);
-      toast({
-        title: "Login successful.",
-        description: "Welcome back!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-
-      navigate("/create");
-    } catch (error) {
-      const err = error as AxiosError;
-      toast({
-        title: "Login failed.",
-        description:
-          typeof err.response?.data === "string"
-            ? err.response.data
-            : JSON.stringify(err.response?.data),
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-      });
-    }
-  };
 
   return (
     <Box maxW="md" mx="auto" mt={10} p={6} boxShadow="md" borderRadius="lg">
