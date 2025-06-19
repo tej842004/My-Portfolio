@@ -1,44 +1,13 @@
-import {
-  Avatar,
-  Button,
-  HStack,
-  Textarea,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
-import type { AxiosError } from "axios";
+import { Avatar, Button, HStack, Textarea, VStack } from "@chakra-ui/react";
 import { Formik } from "formik";
 import Prashant from "../../../assets/images/prash.jpg";
 import useCreateComment from "../../../hooks/Comment/useCreateComment";
+import useHandleCommentSubmission from "../../../hooks/Comment/useHandleCommentSubmission";
 
 const CommentForm = ({ blogId }: { blogId: string }) => {
-  const toast = useToast();
-  const { mutateAsync, isPending } = useCreateComment(blogId);
-
-  const handleSubmit = async ({ commentInput }: { commentInput: string }) => {
-    try {
-      await mutateAsync(commentInput);
-      toast({
-        title: "Comment created.",
-        description: "Your comment has been successfully created.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (err) {
-      const error = err as AxiosError;
-      toast({
-        title: "Error creating blog",
-        description:
-          typeof error.response?.data === "string"
-            ? error.response.data
-            : JSON.stringify(error.response?.data),
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-      });
-    }
-  };
+  const { mutateAsync: createComment, isPending: createCommentLoading } =
+    useCreateComment(blogId);
+  const { handleSubmit } = useHandleCommentSubmission({ createComment });
 
   return (
     <Formik
@@ -64,7 +33,7 @@ const CommentForm = ({ blogId }: { blogId: string }) => {
                   size="sm"
                   colorScheme="blue"
                   isDisabled={!values.commentInput.trim()}
-                  isLoading={isPending}
+                  isLoading={createCommentLoading}
                 >
                   Comment
                 </Button>
