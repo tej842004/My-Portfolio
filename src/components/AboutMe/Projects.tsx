@@ -6,14 +6,26 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import type {
+  InfiniteData,
+  UseInfiniteQueryResult,
+} from "@tanstack/react-query";
 import { HiChevronDown } from "react-icons/hi2";
-import useProjects from "../../hooks/Project/useProjects";
+import type { Project } from "../../entities/Project";
+import type { FetchResponse } from "../../services/api-client";
 import AboutSection from "./AboutSection";
 import ProjectCard from "./ProjectCard";
 
 const heading = "Proof of Work";
 
-const Projects = () => {
+const Projects = ({
+  projectResponse,
+}: {
+  projectResponse: UseInfiniteQueryResult<
+    InfiniteData<FetchResponse<Project>, unknown>,
+    Error
+  >;
+}) => {
   const {
     data: projects,
     fetchNextPage,
@@ -21,7 +33,7 @@ const Projects = () => {
     isFetchingNextPage,
     isLoading,
     error,
-  } = useProjects();
+  } = projectResponse;
 
   const isEmpty =
     !isLoading &&
