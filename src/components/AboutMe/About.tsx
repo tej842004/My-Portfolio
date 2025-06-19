@@ -13,38 +13,31 @@ const About = () => {
   const projectResponse = useProjects();
   const blogResponse = useBlogs();
 
-  const { isLoading: projectLoading } = projectResponse;
-  const { isLoading: blogLoading } = blogResponse;
+  if (projectResponse.isLoading || blogResponse.isLoading)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="50vh"
+        width="100%"
+      >
+        <Spinner />
+      </Box>
+    );
 
   return (
     <Box width="100%" mx="auto">
-      {projectLoading ||
-        (blogLoading && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="50vh"
-            width="100%"
-          >
-            <Spinner />
-          </Box>
-        ))}
+      <Testimonial />
 
-      {!projectLoading && !blogLoading && (
-        <>
-          <Testimonial />
-
-          <VStack gap="5rem" width="85%" mx="auto">
-            <Projects projectResponse={projectResponse} />
-            <Blogs blogsResponse={blogResponse} />
-            <Experience />
-            <Skills />
-            <Education />
-            <GetInTouch />
-          </VStack>
-        </>
-      )}
+      <VStack gap="5rem" width="85%" mx="auto">
+        <Projects projectResponse={projectResponse} />
+        <Blogs blogsResponse={blogResponse} />
+        <Experience />
+        <Skills />
+        <Education />
+        <GetInTouch />
+      </VStack>
     </Box>
   );
 };
