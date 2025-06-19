@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Blog } from "../../entitles/Blog";
+import type { Blog } from "../../entities/Blog";
 import APIClient from "../../services/api-client";
 import useAuth from "../../auth/useAuth";
 

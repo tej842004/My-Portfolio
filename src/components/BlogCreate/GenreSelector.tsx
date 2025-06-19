@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import type { Genre } from "../../entitles/Genre";
+import type { Genre } from "../../entities/Genre";
 import useGenres from "../../hooks/Genre/useGenres";
 
 const GenreSelector = ({

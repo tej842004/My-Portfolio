@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 import AuthContext from "../auth/context";
 import authStorage from "../auth/storage";
 import NavBar from "../components/NavBar";
-import type { User } from "../entitles/User";
+import type { User } from "../entities/User";
 
 const Layout = () => {
   const [user, setUser] = useState<User | null>(null);

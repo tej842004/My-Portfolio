@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
-import type { Blog } from "../../entitles/Blog";
+import type { Blog } from "../../entities/Blog";
 import APIClient, { type FetchResponse } from "../../services/api-client";
 
 const apiClient = new APIClient<Blog>("/api/blogs");

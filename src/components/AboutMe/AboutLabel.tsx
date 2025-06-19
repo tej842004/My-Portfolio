@@ -1,5 +1,5 @@
 import { Box, Heading, Image, Text } from "@chakra-ui/react";
-import type Label from "../../entitles/Label";
+import type Label from "../../entities/Label";
 
 const AboutLabel = ({ image, title, subtitle, date }: Label) => {
   return (

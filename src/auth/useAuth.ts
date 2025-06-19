@@ -1,6 +1,6 @@
 import { jwtDecode } from "jwt-decode";
 import { useContext } from "react";
-import type { User } from "../entitles/User";
+import type { User } from "../entities/User";
 import AuthContext from "./context";
 import authStorage from "./storage";
 

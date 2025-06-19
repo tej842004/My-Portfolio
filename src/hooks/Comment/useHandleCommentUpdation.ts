@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import type { UseMutateAsyncFunction } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import type Comment from "../../entitles/Comment";
+import type Comment from "../../entities/Comment";
 import type { Dispatch, SetStateAction } from "react";
 
 interface Props {

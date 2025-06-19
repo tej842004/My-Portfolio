@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import type { User } from "../entitles/User";
+import type { User } from "../entities/User";
 
 const key = "authToken";
 

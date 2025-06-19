@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
-import type { Project } from "../../entitles/Project";
+import type { Project } from "../../entities/Project";
 import APIClient, { type FetchResponse } from "../../services/api-client";
 
 const apiClient = new APIClient<Project>("/api/projects");

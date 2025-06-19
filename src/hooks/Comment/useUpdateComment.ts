@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type Comment from "../../entitles/Comment";
+import type Comment from "../../entities/Comment";
 import APIClient from "../../services/api-client";
 
 const apiClient = new APIClient<Comment>("/api/comments");

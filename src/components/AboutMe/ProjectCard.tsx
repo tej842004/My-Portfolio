@@ -16,7 +16,7 @@ import {
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { Link } from "react-router";
-import type { Project } from "../../entitles/Project";
+import type { Project } from "../../entities/Project";
 
 interface Props {
   project: Project;

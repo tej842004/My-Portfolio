@@ -1,7 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import type { UseMutateAsyncFunction } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import type { Blog } from "../../../entitles/Blog";
+import type { Blog } from "../../../entities/Blog";
 
 interface DeleteImage {
   public_id: string;

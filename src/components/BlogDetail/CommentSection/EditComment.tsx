@@ -1,6 +1,6 @@
 import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import type Comment from "../../../entitles/Comment";
+import type Comment from "../../../entities/Comment";
 import useHandleCommentUpdation from "../../../hooks/Comment/useHandleCommentUpdation";
 import useUpdateComment from "../../../hooks/Comment/useUpdateComment";
 

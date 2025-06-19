@@ -1,4 +1,4 @@
-import type { Blog } from "../entitles/Blog";
+import type { Blog } from "../entities/Blog";
 
 const formatDate = (blog: Blog) => {
   return blog.createdAt

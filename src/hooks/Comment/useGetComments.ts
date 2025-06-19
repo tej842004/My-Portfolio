@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
-import type Comment from "../../entitles/Comment";
+import type Comment from "../../entities/Comment";
 import APIClient, { type FetchResponse } from "../../services/api-client";
 
 const apiClient = new APIClient<Comment>("/api/comments");

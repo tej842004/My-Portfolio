@@ -19,7 +19,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Link } from "react-router";
-import type { Blog } from "../../entitles/Blog";
+import type { Blog } from "../../entities/Blog";
 import useCreateBlog from "../../hooks/Blog/useCreateBlog";
 import useDeleteBlog from "../../hooks/Blog/useDeleteBlog";
 import useHandleBlogSubmission from "../../hooks/Blog/useHandleBlogSubmission";

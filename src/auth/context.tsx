@@ -1,5 +1,5 @@
 import { createContext, type Dispatch, type SetStateAction } from "react";
-import type { User } from "../entitles/User";
+import type { User } from "../entities/User";
 
 interface AuthContextType {
   user: User | null;

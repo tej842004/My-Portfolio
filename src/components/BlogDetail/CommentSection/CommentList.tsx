@@ -23,7 +23,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Prashant from "../../../assets/images/prash.jpg";
 import useAuth from "../../../auth/useAuth";
-import type Comment from "../../../entitles/Comment";
+import type Comment from "../../../entities/Comment";
 import useDeleteComment from "../../../hooks/Comment/useDeleteComment";
 import useHandleCommentDeletion from "../../../hooks/Comment/useHandleCommentDeletion";
 import type { FetchResponse } from "../../../services/api-client";

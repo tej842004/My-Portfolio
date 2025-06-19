@@ -5,7 +5,7 @@ import type { AxiosError } from "axios";
 import type { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../../auth/useAuth";
-import type { Blog } from "../../entitles/Blog";
+import type { Blog } from "../../entities/Blog";
 import usePortfolioQueryStore from "../../store/store";
 
 interface FetchResponse {
