@@ -29,7 +29,7 @@ const Testimonial = () => {
         />
       </Box>
       <VStack spacing={3} alignItems="flex-start" py={10}>
-        <Text fontSize={{ base: "1xl", md: "2xl" }} color="gray.300">
+        <Text fontSize={{ base: "xl", md: "2xl" }} color="gray.300">
           Hi, I am Prashant Chauhan
         </Text>
         <Box
@@ -40,7 +40,7 @@ const Testimonial = () => {
           <Text
             color="gray.200"
             whiteSpace="nowrap"
-            fontSize={{ base: "6xl", md: "7xl" }}
+            fontSize={{ base: "5xl", md: "7xl" }}
             lineHeight="1"
           >
             Full-Stack
@@ -48,7 +48,7 @@ const Testimonial = () => {
             Developer
           </Text>
 
-          <Text fontSize={{ base: "1xl", md: "2xl" }} color="gray.300">
+          <Text fontSize={{ base: "xl", md: "2xl" }} color="gray.300">
             Transforming ideas into interactive and seamless digital experiences
             with cutting-edge{" "}
             <ShinyText
