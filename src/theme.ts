@@ -27,11 +27,8 @@ const theme = extendTheme({
           fontStyle: "normal",
         },
       ],
-      "html, body": {
-        backgroundColor: "#000000",
-        color: "white",
+      body: {
         fontFamily: "'Sora', 'Vastago Grotesk', sans-serif",
-        lineHeight: "base",
       },
     },
   },
@@ -39,14 +36,14 @@ const theme = extendTheme({
     gray: {
       50: "#f9f9f9",
       100: "#ededed",
-      200: "#d3d3d3",
+      200: "d3d3d3",
       300: "#b3b3b3",
       400: "#a0a0a0",
       500: "#898989",
       600: "#6c6c6c",
       700: "#202020",
       800: "#121212",
-      900: "#000000",
+      900: "#111",
     },
   },
 });

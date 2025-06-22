@@ -84,12 +84,7 @@ const ModernAccordion = () => {
         </Accordion>
       </Box>
 
-      <Box
-        flex="1"
-        minH={{ base: "300px", md: "100%" }}
-        overflow="hidden"
-        position="relative"
-      >
+      <Box flex="1" height="100%" overflow="hidden" position="relative">
         <LetterGlitch
           glitchColors={["#8F00FF", "#9A13DC", "#B452FF", "#6823C2"]}
           glitchSpeed={30}
@@ -104,7 +99,7 @@ const ModernAccordion = () => {
           top="0"
           left="0"
           right="0"
-          height="20px"
+          width="10px"
           bgGradient={`linear(to-b, ${fadeColor}, transparent)`}
           zIndex="1"
           pointerEvents="none"
@@ -116,7 +111,7 @@ const ModernAccordion = () => {
           bottom="0"
           left="0"
           right="0"
-          height="20px"
+          width="10px"
           bgGradient={`linear(to-t, ${fadeColor}, transparent)`}
           zIndex="1"
           pointerEvents="none"
