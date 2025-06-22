@@ -6,7 +6,6 @@ import Education from "./Education";
 import Experience from "./Experience";
 import GetInTouch from "./GetInTouch";
 import Projects from "./Projects";
-import Skills from "./Skills";
 import Testimonial from "./Testimonial";
 
 const About = () => {
@@ -34,7 +33,6 @@ const About = () => {
         <Projects projectResponse={projectResponse} />
         <Blogs blogsResponse={blogResponse} />
         <Experience />
-        <Skills />
         <Education />
         <GetInTouch />
       </VStack>

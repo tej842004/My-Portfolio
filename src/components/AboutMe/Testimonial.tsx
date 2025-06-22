@@ -1,15 +1,77 @@
 import {
   Box,
-  Button,
-  Heading,
   HStack,
-  Image,
+  IconButton,
   Text,
+  Tooltip,
   VStack,
 } from "@chakra-ui/react";
-import Prashant from "../../assets/images/prash.jpg";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { HiOutlineDocumentText } from "react-icons/hi";
+import { MdMailOutline } from "react-icons/md";
+import Particles from "../../react-bits/Particles/Particles";
+import ShinyText from "../../react-bits/ShinyText/ShinyText";
+import Skills from "./Skills";
 
 const Testimonial = () => {
+  return (
+    <Box position="relative" w="full" minH="83vh" overflow="hidden">
+      <Box position="absolute" inset={0} zIndex={-1}>
+        <Particles
+          particleColors={["#ffffff", "#ffffff"]}
+          particleCount={200}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover={true}
+          alphaParticles={false}
+          disableRotation={false}
+        />
+      </Box>
+      <VStack spacing={3} alignItems="flex-start" py={10}>
+        <Text fontSize={{ base: "1xl", md: "2xl" }} color="gray.300">
+          Hi, I am Prashant Chauhan
+        </Text>
+        <Box
+          display="flex"
+          gap={{ base: 5, md: 10 }}
+          flexDirection={{ base: "column", md: "row" }}
+        >
+          <Text
+            whiteSpace="nowrap"
+            fontSize={{ base: "6xl", md: "7xl" }}
+            lineHeight="1"
+          >
+            Full-Stack
+            <br />
+            Developer
+          </Text>
+
+          <Text fontSize={{ base: "1xl", md: "2xl" }} color="gray.300">
+            Transforming ideas into interactive and seamless digital experiences
+            with cutting-edge{" "}
+            <ShinyText
+              text="full-stack"
+              disabled={false}
+              speed={3}
+              className="custom-class"
+              color="#6B46C1"
+            />{" "}
+            development.
+          </Text>
+        </Box>
+
+        <Icons />
+
+        <Skills />
+      </VStack>
+    </Box>
+  );
+};
+
+export default Testimonial;
+
+const Icons = () => {
   const handleScrollToGetInTouch = () => {
     const getInTouchSection = document.getElementById("get-in-touch");
     if (getInTouchSection) {
@@ -19,65 +81,65 @@ const Testimonial = () => {
 
   const handleResumeClick = () => {
     window.open(
-      "https://drive.google.com/file/d/1wY9sSUEkyHJ7rTx9xui5USzQh4cKjirj/view?usp=drive_link",
+      "https://drive.google.com/file/d/1Evfa2dJl6uEtscglnDDuqQn3SS17xwxk/view?usp=drive_link",
       "_blank"
     );
   };
 
   return (
-    <VStack spacing={6} textAlign="center" py={10} marginBottom="15rem">
-      <Image
-        src={Prashant}
-        height="80px"
-        width="80px"
-        borderRadius="full"
-        objectFit="cover"
-        alt="Prashant Chauhan"
-        boxShadow="md"
-      />
-      <Heading fontSize={{ base: "2xl", md: "5xl" }}>
-        Hi, I'm Prashant Chauhan
-      </Heading>
+    <HStack gap={3} mt={10}>
+      <Tooltip label="GitHub" hasArrow>
+        <IconButton
+          as="a"
+          href="https://github.com/tej842004"
+          target="_blank"
+          aria-label="GitHub"
+          icon={<FaGithub size={28} />}
+          variant="ghost"
+          size="lg"
+          isRound
+          color="gray.300"
+        />
+      </Tooltip>
 
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        textAlign="center"
-        fontSize="lg"
-      >
-        <Text width="100%">
-          20, i break things, learn fast, and make shit happen. deep into code
-          and cs; anything that pushes the
-        </Text>
-        <Text width="90%">
-          limits. history, curiosity, cricket, and great books shaped me. still
-          chasing mastery.
-        </Text>
-        <Text width="80%">
-          If you're working on something real, let's talk.
-        </Text>
-      </Box>
+      <Tooltip label="LinkedIn" hasArrow>
+        <IconButton
+          as="a"
+          href="https://www.linkedin.com/in/prashant-chauhan-386b14264/"
+          target="_blank"
+          aria-label="LinkedIn"
+          icon={<FaLinkedin size={28} />}
+          variant="ghost"
+          size="lg"
+          isRound
+          color="gray.300"
+        />
+      </Tooltip>
 
-      <HStack gap={3}>
-        <Button
-          colorScheme="teal"
-          borderRadius="2xl"
+      <Tooltip label="Resume" hasArrow>
+        <IconButton
+          as="a"
+          aria-label="Resume"
+          icon={<HiOutlineDocumentText size={28} />}
+          variant="ghost"
+          size="lg"
+          isRound
+          color="gray.300"
           onClick={handleResumeClick}
-        >
-          Resume
-        </Button>
-        <Button
-          colorScheme="blue"
-          borderRadius="2xl"
+        />
+      </Tooltip>
+
+      <Tooltip label="Get in Touch" hasArrow>
+        <IconButton
           onClick={handleScrollToGetInTouch}
-        >
-          Get in touch
-        </Button>
-      </HStack>
-    </VStack>
+          aria-label="Get in Touch"
+          icon={<MdMailOutline size={28} />}
+          variant="ghost"
+          size="lg"
+          isRound
+          color="gray.300"
+        />
+      </Tooltip>
+    </HStack>
   );
 };
-
-export default Testimonial;
