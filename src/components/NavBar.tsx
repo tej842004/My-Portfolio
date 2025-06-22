@@ -10,19 +10,16 @@ import {
   MenuItem,
   MenuList,
   Tooltip,
-  useColorMode,
   useToast,
 } from "@chakra-ui/react";
 import { FiHome, FiInfo, FiPlusCircle } from "react-icons/fi";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../auth/useAuth";
-import ToggleButton from "./ToggleButton";
 
 const NavBar = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const { user, logOut } = useAuth();
-  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box
@@ -60,18 +57,13 @@ const NavBar = () => {
         </BreadcrumbItem>
       </Breadcrumb>
 
-      {!user ? (
-        <ToggleButton />
-      ) : (
+      {user && (
         <Menu>
           <MenuButton as={Button} borderRadius="full" size="sm">
             {user.name?.charAt(0)}
           </MenuButton>
           <MenuList>
             <MenuGroup title="Profile">
-              <MenuItem onClick={toggleColorMode}>
-                {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
-              </MenuItem>
               <MenuItem
                 onClick={() => {
                   logOut();

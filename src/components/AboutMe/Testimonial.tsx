@@ -55,7 +55,7 @@ const Testimonial = () => {
               disabled={false}
               speed={3}
               className="custom-class"
-              color="#6B46C1"
+              color="#8F00FF"
             />{" "}
             development.
           </Text>

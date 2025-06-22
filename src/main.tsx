@@ -17,7 +17,6 @@ createRoot(document.getElementById("root")!).render(
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <RouterProvider router={router} />
         <ReactQueryDevtools />
-        {/* <App /> */}
       </ChakraProvider>
     </QueryClientProvider>
   </StrictMode>

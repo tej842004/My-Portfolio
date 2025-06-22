@@ -10,7 +10,6 @@ const scrollLeftInfinite = keyframes`
 
 const Skills = () => {
   const fadeColor = useColorModeValue("white", "gray.900");
-  const cardBg = useColorModeValue("gray.100", "gray.800");
 
   const repeatedSkills = useMemo(() => [...skills, ...skills], []);
 
@@ -30,15 +29,13 @@ const Skills = () => {
               mx={3}
               px={{ base: 3, md: 4 }}
               py={2}
-              bg={cardBg}
               borderRadius="xl"
-              boxShadow="sm"
               display="inline-flex"
               alignItems="center"
               gap={2}
               minW="fit-content"
               transition="all 0.2s"
-              _hover={{ boxShadow: "md", transform: "scale(1.05)" }}
+              _hover={{ transform: "scale(1.05)" }}
             >
               <Image
                 src={skill.src}
@@ -46,7 +43,9 @@ const Skills = () => {
                 boxSize="30px"
                 objectFit="contain"
               />
-              <Text fontSize="xl">{skill.title}</Text>
+              <Text fontSize="xl" color="gray.300">
+                {skill.title}
+              </Text>
             </Box>
           ))}
         </Box>
