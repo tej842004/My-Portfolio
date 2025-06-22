@@ -15,7 +15,7 @@ import Skills from "./Skills";
 
 const Testimonial = () => {
   return (
-    <Box position="relative" w="full" minH="83vh" overflow="hidden">
+    <Box position="relative" w="full" minH="84vh" overflow="hidden">
       <Box position="absolute" inset={0} zIndex={-1}>
         <Particles
           particleColors={["#ffffff", "#ffffff"]}
