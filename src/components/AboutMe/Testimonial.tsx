@@ -1,7 +1,7 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
 import ShinyText from "../../react-bits/ShinyText/ShinyText";
 import Icons from "./Icon";
-import ModernAccordion from "./ModernAccordion";
+import WhatIDo from "./WhatIDo";
 import Skills from "./Skills";
 
 const Testimonial = () => {
@@ -38,12 +38,9 @@ const Testimonial = () => {
           development.
         </Text>
       </Box>
-
       <Icons />
-
       <Skills />
-
-      <ModernAccordion />
+      <WhatIDo />
     </VStack>
   );
 };

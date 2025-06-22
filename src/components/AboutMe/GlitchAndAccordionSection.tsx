@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import LetterGlitch from "../../react-bits/LetterGlitch/LetterGlitch";
-import ModernAccordion from "./ModernAccordion"; // assuming your accordion is extracted
+import WhatIDo from "./WhatIDo"; // assuming your accordion is extracted
 
 export default function GlitchAndAccordionSection() {
   return (
@@ -13,7 +13,7 @@ export default function GlitchAndAccordionSection() {
     >
       {/* Accordion Section */}
       <Box flex="1">
-        <ModernAccordion />
+        <WhatIDo />
       </Box>
 
       {/* Letter Glitch Canvas */}

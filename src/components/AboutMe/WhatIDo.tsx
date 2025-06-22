@@ -15,7 +15,7 @@ import { MdCircle } from "react-icons/md";
 import whatIDo from "../../data/whatIDo";
 import LetterGlitch from "../../react-bits/LetterGlitch/LetterGlitch";
 
-const ModernAccordion = () => {
+const WhatIDo = () => {
   const fadeColor = useColorModeValue("white", "gray.900");
 
   return (
@@ -99,7 +99,7 @@ const ModernAccordion = () => {
           top="0"
           left="0"
           right="0"
-          width="10px"
+          height="20px"
           bgGradient={`linear(to-b, ${fadeColor}, transparent)`}
           zIndex="1"
           pointerEvents="none"
@@ -111,7 +111,7 @@ const ModernAccordion = () => {
           bottom="0"
           left="0"
           right="0"
-          width="10px"
+          height="20px"
           bgGradient={`linear(to-t, ${fadeColor}, transparent)`}
           zIndex="1"
           pointerEvents="none"
@@ -145,4 +145,4 @@ const ModernAccordion = () => {
   );
 };
 
-export default ModernAccordion;
+export default WhatIDo;
