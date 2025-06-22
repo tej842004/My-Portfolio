@@ -38,6 +38,7 @@ const Testimonial = () => {
           flexDirection={{ base: "column", md: "row" }}
         >
           <Text
+            color="gray.200"
             whiteSpace="nowrap"
             fontSize={{ base: "6xl", md: "7xl" }}
             lineHeight="1"
