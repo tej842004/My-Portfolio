@@ -13,6 +13,14 @@ const theme = extendTheme({
   },
   styles: {
     global: {
+      "*:focus": {
+        boxShadow: "none !important",
+        outline: "none !important",
+      },
+      "*:focus-visible": {
+        boxShadow: "none !important",
+        outline: "none !important",
+      },
       "@font-face": [
         {
           fontFamily: "Vastago Grotesk",
