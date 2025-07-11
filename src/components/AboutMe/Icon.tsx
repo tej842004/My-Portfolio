@@ -13,7 +13,7 @@ const Icons = () => {
 
   const handleResumeClick = () => {
     window.open(
-      "https://drive.google.com/file/d/1Evfa2dJl6uEtscglnDDuqQn3SS17xwxk/view?usp=drive_link",
+      "https://drive.google.com/file/d/1M5sb02PoU_XeISwt3gqV_pcPcy-h7ECy/view?usp=sharing",
       "_blank"
     );
   };
