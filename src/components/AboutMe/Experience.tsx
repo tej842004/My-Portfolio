@@ -9,7 +9,7 @@ const Experience = () => {
   return (
     <AboutSection heading={heading}>
       <AboutSectionStack>
-        {experience.map((e) => (
+        {[...experience].reverse().map((e) => (
           <AboutLabel {...e} key={e.id} />
         ))}
       </AboutSectionStack>
